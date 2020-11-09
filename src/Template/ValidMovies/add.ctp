@@ -15,10 +15,10 @@
     <fieldset>
         <legend><?= __('Add Valid Movie') ?></legend>
         <?php
-            echo $this->Form->control('origininal_title');
-            echo $this->Form->control('popularity');
-            echo $this->Form->control('adult');
-            echo $this->Form->control('video');
+        echo $this->Form->control('origininal_title');
+        echo $this->Form->control('popularity');
+        echo $this->Form->control('adult');
+        echo $this->Form->control('video');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -12,7 +12,7 @@
                 ['action' => 'delete', $user->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
             )
-        ?></li>
+            ?></li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
@@ -21,9 +21,9 @@
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-            echo $this->Form->control('name');
-            echo $this->Form->control('email');
-            echo $this->Form->control('password');
+        echo $this->Form->control('name');
+        echo $this->Form->control('email');
+        echo $this->Form->control('password');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

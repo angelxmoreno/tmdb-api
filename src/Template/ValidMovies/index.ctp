@@ -14,19 +14,19 @@
     <h3><?= __('Valid Movies') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('origininal_title') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('popularity') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('adult') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('video') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
+        <tr>
+            <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('origininal_title') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('popularity') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('adult') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('video') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
+            <th scope="col" class="actions"><?= __('Actions') ?></th>
+        </tr>
         </thead>
         <tbody>
-            <?php foreach ($validMovies as $validMovie): ?>
+        <?php foreach ($validMovies as $validMovie): ?>
             <tr>
                 <td><?= $this->Number->format($validMovie->id) ?></td>
                 <td><?= h($validMovie->origininal_title) ?></td>
@@ -41,7 +41,7 @@
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $validMovie->id], ['confirm' => __('Are you sure you want to delete # {0}?', $validMovie->id)]) ?>
                 </td>
             </tr>
-            <?php endforeach; ?>
+        <?php endforeach; ?>
         </tbody>
     </table>
     <div class="paginator">

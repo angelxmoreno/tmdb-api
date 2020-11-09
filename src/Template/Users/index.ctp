@@ -14,18 +14,18 @@
     <h3><?= __('Users') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('password') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
+        <tr>
+            <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('name') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('email') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('password') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
+            <th scope="col" class="actions"><?= __('Actions') ?></th>
+        </tr>
         </thead>
         <tbody>
-            <?php foreach ($users as $user): ?>
+        <?php foreach ($users as $user): ?>
             <tr>
                 <td><?= h($user->id) ?></td>
                 <td><?= h($user->name) ?></td>
@@ -39,7 +39,7 @@
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
                 </td>
             </tr>
-            <?php endforeach; ?>
+        <?php endforeach; ?>
         </tbody>
     </table>
     <div class="paginator">

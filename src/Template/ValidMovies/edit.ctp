@@ -12,7 +12,7 @@
                 ['action' => 'delete', $validMovie->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $validMovie->id)]
             )
-        ?></li>
+            ?></li>
         <li><?= $this->Html->link(__('List Valid Movies'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
@@ -21,10 +21,10 @@
     <fieldset>
         <legend><?= __('Edit Valid Movie') ?></legend>
         <?php
-            echo $this->Form->control('origininal_title');
-            echo $this->Form->control('popularity');
-            echo $this->Form->control('adult');
-            echo $this->Form->control('video');
+        echo $this->Form->control('origininal_title');
+        echo $this->Form->control('popularity');
+        echo $this->Form->control('adult');
+        echo $this->Form->control('video');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

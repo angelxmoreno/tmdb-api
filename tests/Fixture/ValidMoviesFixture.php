@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
@@ -34,6 +35,7 @@ class ValidMoviesFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
+
     /**
      * Init method
      *

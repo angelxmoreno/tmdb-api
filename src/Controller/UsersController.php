@@ -1,7 +1,6 @@
 <?php
-namespace App\Controller;
 
-use App\Controller\AppController;
+namespace App\Controller;
 
 /**
  * Users Controller

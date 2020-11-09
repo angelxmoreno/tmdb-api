@@ -1,17 +1,13 @@
 <?php
-
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * Users Model
- *
- * @property \App\Model\Table\EnvelopeCategoryLinksTable&\Cake\ORM\Association\HasMany $EnvelopeCategoryLinks
- * @property \App\Model\Table\EnvelopesTable&\Cake\ORM\Association\HasMany $Envelopes
- * @property \App\Model\Table\PlaidItemsTable&\Cake\ORM\Association\HasMany $PlaidItems
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -41,16 +37,6 @@ class UsersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-
-        $this->hasMany('EnvelopeCategoryLinks', [
-            'foreignKey' => 'user_id',
-        ]);
-        $this->hasMany('Envelopes', [
-            'foreignKey' => 'user_id',
-        ]);
-        $this->hasMany('PlaidItems', [
-            'foreignKey' => 'user_id',
-        ]);
     }
 
     /**

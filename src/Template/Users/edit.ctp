@@ -12,12 +12,8 @@
                 ['action' => 'delete', $user->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
             )
-            ?></li>
+        ?></li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Envelopes'), ['controller' => 'Envelopes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Envelope'), ['controller' => 'Envelopes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Plaid Items'), ['controller' => 'PlaidItems', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Plaid Item'), ['controller' => 'PlaidItems', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="users form large-9 medium-8 columns content">
@@ -25,9 +21,9 @@
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-        echo $this->Form->control('name');
-        echo $this->Form->control('email');
-        echo $this->Form->control('password');
+            echo $this->Form->control('name');
+            echo $this->Form->control('email');
+            echo $this->Form->control('password');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -4,16 +4,17 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * User Entity
+ * ValidMovie Entity
  *
- * @property string $id
- * @property string $name
- * @property string $email
- * @property string|null $password
+ * @property int $id
+ * @property string $origininal_title
+ * @property float $popularity
+ * @property bool $adult
+ * @property bool $video
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  */
-class User extends Entity
+class ValidMovie extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -25,19 +26,11 @@ class User extends Entity
      * @var array
      */
     protected $_accessible = [
-        'name' => true,
-        'email' => true,
-        'password' => true,
+        'origininal_title' => true,
+        'popularity' => true,
+        'adult' => true,
+        'video' => true,
         'created' => true,
         'modified' => true,
-    ];
-
-    /**
-     * Fields that are excluded from JSON versions of the entity.
-     *
-     * @var array
-     */
-    protected $_hidden = [
-        'password',
     ];
 }

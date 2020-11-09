@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
@@ -32,7 +31,6 @@ class UsersFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
      * Init method
      *
@@ -42,12 +40,12 @@ class UsersFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 'e8f8f50a-3065-4bbb-ae64-24e03619716d',
+                'id' => '3cc36579-e76a-4de7-898b-060e112b1902',
                 'name' => 'Lorem ipsum dolor sit amet',
                 'email' => 'Lorem ipsum dolor sit amet',
                 'password' => 'Lorem ipsum dolor sit amet',
-                'created' => '2020-10-04 01:13:06',
-                'modified' => '2020-10-04 01:13:06',
+                'created' => '2020-11-09 06:48:29',
+                'modified' => '2020-11-09 06:48:29',
             ],
         ];
         parent::init();

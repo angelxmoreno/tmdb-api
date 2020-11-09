@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -71,5 +72,19 @@ class ValidMoviesTable extends Table
             ->notEmptyString('video');
 
         return $validator;
+    }
+
+    /**
+     * @param array $data
+     * @return \App\Model\Entity\ValidMovie|false
+     */
+    public function upsertData(array $data)
+    {
+        $id = Hash::get($data, 'id', false);
+        if (!$id) {
+            return false;
+        }
+        $entity = $this->newEntity($data);
+        return $this->save($entity);
     }
 }

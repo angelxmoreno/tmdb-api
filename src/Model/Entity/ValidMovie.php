@@ -27,6 +27,7 @@ class ValidMovie extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id' => true,
         'original_title' => true,
         'popularity' => true,
         'adult' => true,

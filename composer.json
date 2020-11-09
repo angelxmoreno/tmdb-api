@@ -14,8 +14,7 @@
         "firebase/php-jwt": "^5.2",
         "mobiledetect/mobiledetectlib": "2.*",
         "muffin/trash": "^2.1",
-        "pusher/pusher-php-server": "^4.1",
-        "tomorrow-ideas/plaid-sdk-php": "^0.12.0"
+        "pusher/pusher-php-server": "^4.1"
     },
     "require-dev": {
         "cakephp/bake": "^1.9.0",
@@ -43,7 +42,6 @@
     "scripts": {
         "post-install-cmd": "App\\Console\\Installer::postInstall",
         "post-create-project-cmd": "App\\Console\\Installer::postInstall",
-        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
         "check": [
             "@test",
             "@cs-check"

@@ -17,8 +17,8 @@
     <h3><?= h($validMovie->id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Origininal Title') ?></th>
-            <td><?= h($validMovie->origininal_title) ?></td>
+            <th scope="row"><?= __('Original Title') ?></th>
+            <td><?= h($validMovie->original_title) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>

@@ -51,10 +51,9 @@ class ValidMoviesTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->scalar('origininal_title')
-            ->maxLength('origininal_title', 200)
-            ->requirePresence('origininal_title', 'create')
-            ->notEmptyString('origininal_title');
+            ->scalar('original_title')
+            ->maxLength('original_title', 200)
+            ->notEmptyString('original_title');
 
         $validator
             ->numeric('popularity')

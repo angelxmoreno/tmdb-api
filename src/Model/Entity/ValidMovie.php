@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
  * ValidMovie Entity
  *
  * @property int $id
- * @property string $origininal_title
+ * @property string $original_title
  * @property float $popularity
  * @property bool $adult
  * @property bool $video
@@ -27,7 +27,7 @@ class ValidMovie extends Entity
      * @var array
      */
     protected $_accessible = [
-        'origininal_title' => true,
+        'original_title' => true,
         'popularity' => true,
         'adult' => true,
         'video' => true,

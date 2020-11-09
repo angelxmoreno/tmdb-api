@@ -409,6 +409,9 @@ return [
     'Session' => [
         'defaults' => 'php',
     ],
+    'Tmdb'=>[
+        'api_key'=>env('TMDB_API_KEY')
+    ],
     'Pusher' => [
         'app_id' => env('PUSHER_APP_ID'),
         'key' => env('PUSHER_KEY'),

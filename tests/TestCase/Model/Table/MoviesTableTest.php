@@ -2,21 +2,21 @@
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\UsersTable;
+use App\Model\Table\MoviesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\UsersTable Test Case
+ * App\Model\Table\MoviesTable Test Case
  */
-class UsersTableTest extends TestCase
+class MoviesTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UsersTable
+     * @var \App\Model\Table\MoviesTable
      */
-    public $Users;
+    public $Movies;
 
     /**
      * Fixtures
@@ -24,7 +24,11 @@ class UsersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Users',
+        'app.Movies',
+        'app.Credits',
+        'app.ProductionCompanies',
+        'app.Genres',
+        'app.Keywords',
     ];
 
     /**
@@ -35,8 +39,8 @@ class UsersTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
-        $this->Users = TableRegistry::getTableLocator()->get('Users', $config);
+        $config = TableRegistry::getTableLocator()->exists('Movies') ? [] : ['className' => MoviesTable::class];
+        $this->Movies = TableRegistry::getTableLocator()->get('Movies', $config);
     }
 
     /**
@@ -46,7 +50,7 @@ class UsersTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Users);
+        unset($this->Movies);
 
         parent::tearDown();
     }
@@ -67,16 +71,6 @@ class UsersTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

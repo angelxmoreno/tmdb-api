@@ -2,7 +2,11 @@
 
 namespace App\Model\Table;
 
+use App\Model\Behavior\PayloadFieldTrait;
+use App\Model\Entity\Movie;
+use Cake\Event\Event;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -26,6 +30,8 @@ use Cake\Validation\Validator;
  */
 class MoviesTable extends Table
 {
+    use PayloadFieldTrait;
+
     /**
      * Initialize method
      *
@@ -73,16 +79,145 @@ class MoviesTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->scalar('name')
-            ->maxLength('name', 200)
-            ->notEmptyString('name');
+            ->scalar('title')
+            ->maxLength('title', 200)
+            ->requirePresence('title', 'create')
+            ->notEmptyString('title');
 
         $validator
-            ->scalar('payload')
-            ->maxLength('payload', 4294967295)
+            ->scalar('tagline')
+            ->maxLength('tagline', 200)
+            ->allowEmptyString('tagline');
+
+        $validator
+            ->scalar('overview')
+            ->maxLength('overview', 4294967295)
+            ->allowEmptyString('overview');
+
+        $validator
+            ->boolean('is_adult')
+            ->notEmptyString('is_adult');
+
+        $validator
+            ->decimal('budget')
+            ->greaterThanOrEqual('budget', 0)
+            ->allowEmptyString('budget');
+
+        $validator
+            ->decimal('revenue')
+            ->allowEmptyString('revenue');
+
+        $validator
+            ->scalar('language')
+            ->maxLength('language', 5)
+            ->allowEmptyString('language');
+
+        $validator
+            ->scalar('homepage')
+            ->maxLength('homepage', 200)
+            ->allowEmptyString('homepage');
+
+        $validator
+            ->scalar('status')
+            ->maxLength('status', 50)
+            ->allowEmptyString('status');
+
+        $validator
+            ->allowEmptyString('runtime');
+
+        $validator
+            ->nonNegativeInteger('vote_count')
+            ->allowEmptyString('vote_count');
+
+        $validator
+            ->decimal('popularity')
+            ->greaterThanOrEqual('popularity', 0)
+            ->allowEmptyString('popularity');
+
+        $validator
+            ->decimal('vote_average')
+            ->greaterThanOrEqual('vote_average', 0)
+            ->allowEmptyString('vote_average');
+
+        $validator
+            ->scalar('imdb_uid')
+            ->maxLength('imdb_uid', 50)
+            ->allowEmptyString('imdb_uid');
+
+        $validator
+            ->scalar('facebook_uid')
+            ->maxLength('facebook_uid', 50)
+            ->allowEmptyString('facebook_uid');
+
+        $validator
+            ->scalar('instagram_uid')
+            ->maxLength('instagram_uid', 50)
+            ->allowEmptyString('instagram_uid');
+
+        $validator
+            ->scalar('twitter_uid')
+            ->maxLength('twitter_uid', 50)
+            ->allowEmptyString('twitter_uid');
+
+        $validator
+            ->notEmptyString('videos_count');
+
+        $validator
+            ->notEmptyString('posters_count');
+
+        $validator
+            ->notEmptyString('backdrops_count');
+
+        $validator
+            ->isArray('payload')
             ->requirePresence('payload', 'create')
-            ->notEmptyString('payload');
+            ->notEmptyArray('payload');
+
+        $validator
+            ->date('released')
+            ->allowEmptyDate('released');
 
         return $validator;
+    }
+
+    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
+    {
+        $map = [
+            'payload' => function ($data) {
+                return (array)$data;
+            },
+            'is_adult' => function ($data) {
+                return !!$data['adult'];
+            },
+            'released' => 'release_date',
+            'language' => 'original_language',
+            'imdb_uid' => 'external_ids.imdb_id',
+            'facebook_uid' => 'external_ids.facebook_id',
+            'instagram_uid' => 'external_ids.instagram_id',
+            'twitter_uid' => 'external_ids.twitter_id',
+        ];
+
+        foreach ($map as $k => $v) {
+            if (!isset($data[$k]) && is_string($v)) {
+                $data[$k] = Hash::get($data, $v, null);
+            } elseif (!isset($data[$k]) && is_callable($v)) {
+                $data[$k] = $v($data);
+            }
+
+            if (is_string($data[$k])) {
+                trim($data[$k]);
+            }
+        }
+        $entity = new Movie();
+        $props = $entity->getAccessible();
+        foreach ($props as $name => $writable) {
+            if ($writable && isset($data[$name])) {
+                if (is_string($data[$name]) && trim($data[$name]) === '') {
+                    $data[$name] = null;
+                } elseif (is_numeric($data[$name]) && $data[$name] == 0) {
+                    $data[$name] = null;
+                }
+            }
+        }
     }
 }

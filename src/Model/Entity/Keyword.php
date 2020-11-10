@@ -26,6 +26,7 @@ class Keyword extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id' => true,
         'name' => true,
         'created' => true,
         'modified' => true,

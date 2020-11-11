@@ -7,11 +7,18 @@ use Cake\ORM\Entity;
 /**
  * Video Entity
  *
- * @property int $id
+ * @property string $id
+ * @property int $movie_id
  * @property string $name
- * @property string $payload
+ * @property string|null $iso_639_1
+ * @property string|null $iso_3166_1
+ * @property string|null $site_uid
+ * @property string|null $site
+ * @property int|null $size
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
+ *
+ * @property \App\Model\Entity\Movie $movie
  */
 class Video extends Entity
 {
@@ -25,9 +32,16 @@ class Video extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id' => true,
+        'movie_id' => true,
         'name' => true,
-        'payload' => true,
+        'iso_639_1' => true,
+        'iso_3166_1' => true,
+        'site_uid' => true,
+        'site' => true,
+        'size' => true,
         'created' => true,
         'modified' => true,
+        'movie' => true,
     ];
 }

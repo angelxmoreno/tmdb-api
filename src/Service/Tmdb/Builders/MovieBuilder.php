@@ -30,6 +30,7 @@ class MovieBuilder extends BuilderBase
 
         $production_companies = CompanyBuilder::buildFromRaw($data);
         self::linkProductionCompanies($movie, $production_companies);
+        VideoBuilder::buildFromRaw($movie, $data);
         return $movie;
     }
 

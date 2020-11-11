@@ -52,6 +52,11 @@ class MoviesTable extends Table
         $this->hasMany('Credits', [
             'foreignKey' => 'movie_id',
         ]);
+
+        $this->hasMany('Videos', [
+            'foreignKey' => 'movie_id',
+        ]);
+
         $this->belongsToMany('Genres', [
             'foreignKey' => 'movie_id',
             'targetForeignKey' => 'genre_id',

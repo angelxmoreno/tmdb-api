@@ -80,7 +80,6 @@ class TmdbService
     protected function buildMovieInstance(array $data)
     {
         //movie
-        // build and tie production companies
         // build person and cast and tie to movie
         // build person and crew and tie to movie
         // add external ids to people and movies

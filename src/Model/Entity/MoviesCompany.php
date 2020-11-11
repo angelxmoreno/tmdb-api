@@ -5,19 +5,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Company Entity
+ * MoviesCompany Entity
  *
  * @property int $id
- * @property string $name
- * @property string|null $logo_path
- * @property string|null $origin_country
- * @property string $payload
+ * @property int $movie_id
+ * @property int $company_id
+ * @property string $type
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
- * @property \App\Model\Entity\Movie[] $movies
+ * @property \App\Model\Entity\Movie $movie
+ * @property \App\Model\Entity\Company $company
  */
-class Company extends Entity
+class MoviesCompany extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -29,13 +29,12 @@ class Company extends Entity
      * @var array
      */
     protected $_accessible = [
-        'id' => true,
-        'name' => true,
-        'logo_path' => true,
-        'origin_country' => true,
-        'payload' => true,
+        'movie_id' => true,
+        'company_id' => true,
+        'type' => true,
         'created' => true,
         'modified' => true,
-        'movies' => true,
+        'movie' => true,
+        'company' => true,
     ];
 }

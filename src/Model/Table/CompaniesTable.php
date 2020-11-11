@@ -2,13 +2,16 @@
 
 namespace App\Model\Table;
 
+use App\Model\Behavior\NullMakerTrait;
+use App\Model\Behavior\PayloadFieldTrait;
+use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * Companies Model
  *
- * @property \App\Model\Table\ProductionCompaniesTable&\Cake\ORM\Association\HasMany $ProductionCompanies
+ * @property \App\Model\Table\MoviesTable&\Cake\ORM\Association\BelongsToMany $Movies
  *
  * @method \App\Model\Entity\Company get($primaryKey, $options = [])
  * @method \App\Model\Entity\Company newEntity($data = null, array $options = [])
@@ -23,6 +26,9 @@ use Cake\Validation\Validator;
  */
 class CompaniesTable extends Table
 {
+    use PayloadFieldTrait;
+    use NullMakerTrait;
+
     /**
      * Initialize method
      *
@@ -39,8 +45,10 @@ class CompaniesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('ProductionCompanies', [
+        $this->belongsToMany('Movies', [
             'foreignKey' => 'company_id',
+            'targetForeignKey' => 'movie_id',
+            'joinTable' => 'movies_companies',
         ]);
     }
 
@@ -62,11 +70,32 @@ class CompaniesTable extends Table
             ->notEmptyString('name');
 
         $validator
-            ->scalar('payload')
-            ->maxLength('payload', 4294967295)
+            ->scalar('logo_path')
+            ->maxLength('logo_path', 200)
+            ->allowEmptyString('logo_path');
+
+        $validator
+            ->scalar('origin_country')
+            ->maxLength('origin_country', 100)
+            ->allowEmptyString('origin_country');
+
+        $validator
+            ->isArray('payload')
             ->requirePresence('payload', 'create')
-            ->notEmptyString('payload');
+            ->notEmptyArray('payload');
 
         return $validator;
+    }
+
+
+    /**
+     * @param Event $event
+     * @param \ArrayObject $data
+     * @param \ArrayObject $options
+     */
+    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
+    {
+        $data['payload'] = (array)$data;
+        $this->nullifyProps($data);
     }
 }

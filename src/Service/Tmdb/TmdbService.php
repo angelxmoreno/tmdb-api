@@ -45,7 +45,6 @@ class TmdbService
     {
         $url = $this->buildMovieUrl($movie_id, []);
         $data = $this->httpGet($url);
-        debug($data);
         if (isset($data['success']) && $data['success'] === false) {
             throw new InvalidMovieIdException(compact('movie_id'));
         }

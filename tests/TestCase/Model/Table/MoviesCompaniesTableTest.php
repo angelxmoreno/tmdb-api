@@ -2,21 +2,21 @@
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\CompaniesTable;
+use App\Model\Table\MoviesCompaniesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\CompaniesTable Test Case
+ * App\Model\Table\MoviesCompaniesTable Test Case
  */
-class CompaniesTableTest extends TestCase
+class MoviesCompaniesTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CompaniesTable
+     * @var \App\Model\Table\MoviesCompaniesTable
      */
-    public $Companies;
+    public $MoviesCompanies;
 
     /**
      * Fixtures
@@ -24,8 +24,9 @@ class CompaniesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Companies',
+        'app.MoviesCompanies',
         'app.Movies',
+        'app.Companies',
     ];
 
     /**
@@ -36,8 +37,8 @@ class CompaniesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Companies') ? [] : ['className' => CompaniesTable::class];
-        $this->Companies = TableRegistry::getTableLocator()->get('Companies', $config);
+        $config = TableRegistry::getTableLocator()->exists('MoviesCompanies') ? [] : ['className' => MoviesCompaniesTable::class];
+        $this->MoviesCompanies = TableRegistry::getTableLocator()->get('MoviesCompanies', $config);
     }
 
     /**
@@ -47,7 +48,7 @@ class CompaniesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Companies);
+        unset($this->MoviesCompanies);
 
         parent::tearDown();
     }
@@ -68,6 +69,16 @@ class CompaniesTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

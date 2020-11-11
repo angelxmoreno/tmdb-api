@@ -2,8 +2,8 @@
 
 namespace App\Model\Table;
 
+use App\Model\Behavior\NullMakerTrait;
 use App\Model\Behavior\PayloadFieldTrait;
-use App\Model\Entity\Movie;
 use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
@@ -31,6 +31,7 @@ use Cake\Validation\Validator;
 class MoviesTable extends Table
 {
     use PayloadFieldTrait;
+    use NullMakerTrait;
 
     /**
      * Initialize method
@@ -51,9 +52,6 @@ class MoviesTable extends Table
         $this->hasMany('Credits', [
             'foreignKey' => 'movie_id',
         ]);
-        $this->hasMany('ProductionCompanies', [
-            'foreignKey' => 'movie_id',
-        ]);
         $this->belongsToMany('Genres', [
             'foreignKey' => 'movie_id',
             'targetForeignKey' => 'genre_id',
@@ -63,6 +61,15 @@ class MoviesTable extends Table
             'foreignKey' => 'movie_id',
             'targetForeignKey' => 'keyword_id',
             'joinTable' => 'movies_keywords',
+        ]);
+        $this->belongsToMany('ProductionCompanies', [
+            'className' => 'Companies',
+            'foreignKey' => 'movie_id',
+            'targetForeignKey' => 'company_id',
+            'through' => 'MoviesCompanies',
+            'conditions' => [
+                'MoviesCompanies.type' => MoviesCompaniesTable::TYPE_PRODUCTION
+            ]
         ]);
     }
 
@@ -187,7 +194,7 @@ class MoviesTable extends Table
                 return (array)$data;
             },
             'is_adult' => function ($data) {
-                return !!$data['adult'];
+                return !!Hash::get($data, 'adult', false);
             },
             'released' => 'release_date',
             'language' => 'original_language',
@@ -208,16 +215,6 @@ class MoviesTable extends Table
                 trim($data[$k]);
             }
         }
-        $entity = new Movie();
-        $props = $entity->getAccessible();
-        foreach ($props as $name => $writable) {
-            if ($writable && isset($data[$name])) {
-                if (is_string($data[$name]) && trim($data[$name]) === '') {
-                    $data[$name] = null;
-                } elseif (is_numeric($data[$name]) && $data[$name] == 0) {
-                    $data[$name] = null;
-                }
-            }
-        }
+        $this->nullifyProps($data);
     }
 }

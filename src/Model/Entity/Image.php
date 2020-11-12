@@ -8,8 +8,15 @@ use Cake\ORM\Entity;
  * Image Entity
  *
  * @property int $id
+ * @property string $foreign_model
+ * @property int $foreign_uid
+ * @property string $type
  * @property string $file_path
- * @property string $payload
+ * @property int|null $height
+ * @property int|null $width
+ * @property int|null $vote_count
+ * @property float|null $vote_average
+ * @property string|null $iso_639_1
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  */
@@ -25,8 +32,16 @@ class Image extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id' => true,
+        'foreign_model' => true,
+        'foreign_uid' => true,
+        'type' => true,
         'file_path' => true,
-        'payload' => true,
+        'height' => true,
+        'width' => true,
+        'vote_count' => true,
+        'vote_average' => true,
+        'iso_639_1' => true,
         'created' => true,
         'modified' => true,
     ];

@@ -38,7 +38,6 @@ class VideoBuilder extends BuilderBase
     protected static function save(array $data): array
     {
         $entities = self::getTable()->newEntities($data);
-//        debug($entities);die;
         self::getTable()->saveManyOrFail($entities);
         return $entities;
     }

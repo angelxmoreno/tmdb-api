@@ -57,6 +57,24 @@ class MoviesTable extends Table
             'foreignKey' => 'movie_id',
         ]);
 
+        $this->hasMany('MoviePosters', [
+            'foreignKey' => 'foreign_uid',
+            'conditions' => [
+                'MoviePosters.type' => 'posters',
+                'MoviePosters.foreign_model' => 'movies',
+            ],
+            'propertyName' => 'posters'
+        ]);
+
+        $this->hasMany('MovieBackdrops', [
+            'foreignKey' => 'foreign_uid',
+            'conditions' => [
+                'MovieBackdrops.type' => 'backdrops',
+                'MovieBackdrops.foreign_model' => 'movies',
+            ],
+            'propertyName' => 'backdrops'
+        ]);
+
         $this->belongsToMany('Genres', [
             'foreignKey' => 'movie_id',
             'targetForeignKey' => 'genre_id',

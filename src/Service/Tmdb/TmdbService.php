@@ -40,6 +40,7 @@ class TmdbService
     /**
      * @param string|int $movie_id
      * @return Movie
+     * @throws \Exception
      */
     public function getMovie($movie_id): Movie
     {
@@ -59,7 +60,7 @@ class TmdbService
     protected function buildMovieUrl($movie_id, array $args = [])
     {
         return sprintf(
-            '%s/movie/%s?api_key=%s&language=en-US&append_to_response=%s',
+            '%s/movie/%s?api_key=%s&language=en-US&&include_image_language=en&append_to_response=%s',
             self::BASE_URL,
             $movie_id,
             $this->api_key,
@@ -86,7 +87,6 @@ class TmdbService
         // build and tie backdrop image then download
         // build and tie poster image then download
         // build and tie release dates, maybe
-        // build and tie videos
         // iterate through review then build and tie each
 
     }

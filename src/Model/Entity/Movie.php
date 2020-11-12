@@ -38,6 +38,8 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Genre[] $genres
  * @property \App\Model\Entity\Keyword[] $keywords
  * @property \App\Model\Entity\Company[] $production_companies
+ * @property \App\Model\Entity\Image[] $posters
+ * @property \App\Model\Entity\Image[] $backdrops
  */
 class Movie extends Entity
 {
@@ -81,5 +83,7 @@ class Movie extends Entity
         'production_companies' => true,
         'genres' => true,
         'keywords' => true,
+        'posters' => true,
+        'backdrops' => true,
     ];
 }

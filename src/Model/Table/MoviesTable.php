@@ -2,9 +2,7 @@
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\NullMakerTrait;
 use App\Model\Behavior\PayloadFieldTrait;
-use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
@@ -12,8 +10,6 @@ use Cake\Validation\Validator;
 /**
  * Movies Model
  *
- * @property \App\Model\Table\CreditsTable&\Cake\ORM\Association\HasMany $Credits
- * @property \App\Model\Table\ProductionCompaniesTable&\Cake\ORM\Association\HasMany $ProductionCompanies
  * @property \App\Model\Table\GenresTable&\Cake\ORM\Association\BelongsToMany $Genres
  * @property \App\Model\Table\KeywordsTable&\Cake\ORM\Association\BelongsToMany $Keywords
  *
@@ -31,7 +27,6 @@ use Cake\Validation\Validator;
 class MoviesTable extends Table
 {
     use PayloadFieldTrait;
-    use NullMakerTrait;
 
     /**
      * Initialize method
@@ -98,6 +93,23 @@ class MoviesTable extends Table
                 'MoviesCompanies.type' => MoviesCompaniesTable::TYPE_PRODUCTION
             ]
         ]);
+        $this->addBehavior('MarshalMapper', [
+            'mapper' => [
+                'payload' => function ($data) {
+                    return (array)$data;
+                },
+                'is_adult' => function ($data) {
+                    return !!Hash::get($data, 'adult', false);
+                },
+                'released' => 'release_date',
+                'language' => 'original_language',
+                'imdb_uid' => 'external_ids.imdb_id',
+                'facebook_uid' => 'external_ids.facebook_id',
+                'instagram_uid' => 'external_ids.instagram_id',
+                'twitter_uid' => 'external_ids.twitter_id',
+            ],
+        ]);
+        $this->addBehavior('NullifyProps');
     }
 
     /**
@@ -212,36 +224,5 @@ class MoviesTable extends Table
             ->allowEmptyDate('released');
 
         return $validator;
-    }
-
-    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
-    {
-        $map = [
-            'payload' => function ($data) {
-                return (array)$data;
-            },
-            'is_adult' => function ($data) {
-                return !!Hash::get($data, 'adult', false);
-            },
-            'released' => 'release_date',
-            'language' => 'original_language',
-            'imdb_uid' => 'external_ids.imdb_id',
-            'facebook_uid' => 'external_ids.facebook_id',
-            'instagram_uid' => 'external_ids.instagram_id',
-            'twitter_uid' => 'external_ids.twitter_id',
-        ];
-
-        foreach ($map as $k => $v) {
-            if (!isset($data[$k]) && is_string($v)) {
-                $data[$k] = Hash::get($data, $v, null);
-            } elseif (!isset($data[$k]) && is_callable($v)) {
-                $data[$k] = $v($data);
-            }
-
-            if (is_string($data[$k])) {
-                trim($data[$k]);
-            }
-        }
-        $this->nullifyProps($data);
     }
 }

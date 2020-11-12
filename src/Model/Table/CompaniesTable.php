@@ -2,9 +2,7 @@
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\NullMakerTrait;
 use App\Model\Behavior\PayloadFieldTrait;
-use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -27,7 +25,6 @@ use Cake\Validation\Validator;
 class CompaniesTable extends Table
 {
     use PayloadFieldTrait;
-    use NullMakerTrait;
 
     /**
      * Initialize method
@@ -50,6 +47,14 @@ class CompaniesTable extends Table
             'targetForeignKey' => 'movie_id',
             'joinTable' => 'movies_companies',
         ]);
+        $this->addBehavior('MarshalMapper', [
+            'mapper' => [
+                'payload' => function ($data) {
+                    return (array)$data;
+                },
+            ],
+        ]);
+        $this->addBehavior('NullifyProps');
     }
 
     /**
@@ -85,17 +90,5 @@ class CompaniesTable extends Table
             ->notEmptyArray('payload');
 
         return $validator;
-    }
-
-
-    /**
-     * @param Event $event
-     * @param \ArrayObject $data
-     * @param \ArrayObject $options
-     */
-    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
-    {
-        $data['payload'] = (array)$data;
-        $this->nullifyProps($data);
     }
 }

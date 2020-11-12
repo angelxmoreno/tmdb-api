@@ -2,7 +2,6 @@
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\NullMakerTrait;
 use App\Model\Entity\Image;
 use Cake\Event\Event;
 use Cake\ORM\Table;
@@ -24,8 +23,6 @@ use Cake\Validation\Validator;
  */
 class ImagesTable extends Table
 {
-    use NullMakerTrait;
-
     /**
      * Initialize method
      *
@@ -41,6 +38,8 @@ class ImagesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->addBehavior('NullifyProps');
     }
 
     /**
@@ -121,7 +120,5 @@ class ImagesTable extends Table
                 $data['id'] = $found->id;
             }
         }
-
-        return $this->nullifyProps($data);
     }
 }

@@ -2,11 +2,8 @@
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\NullMakerTrait;
-use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -28,8 +25,6 @@ use Cake\Validation\Validator;
  */
 class CrewsTable extends Table
 {
-    use NullMakerTrait;
-
     /**
      * Initialize method
      *
@@ -54,6 +49,13 @@ class CrewsTable extends Table
             'foreignKey' => 'person_id',
             'joinType' => 'INNER',
         ]);
+        $this->addBehavior('MarshalMapper', [
+            'mapper' => [
+                'person_id' => 'id',
+                'id' => 'credit_id',
+            ],
+        ]);
+        $this->addBehavior('NullifyProps');
     }
 
     /**
@@ -95,32 +97,5 @@ class CrewsTable extends Table
         $rules->add($rules->existsIn(['person_id'], 'People'));
 
         return $rules;
-    }
-
-
-    /**
-     * @param Event $event
-     * @param \ArrayObject $data
-     * @param \ArrayObject $options
-     */
-    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
-    {
-        $map = [
-            'person_id' => 'id',
-            'id' => 'credit_id',
-        ];
-
-        foreach ($map as $k => $v) {
-            if (is_string($v)) {
-                $data[$k] = Hash::get($data, $v, null);
-            } elseif (is_callable($v)) {
-                $data[$k] = $v($data);
-            }
-
-            if (is_string($data[$k])) {
-                trim($data[$k]);
-            }
-        }
-        $this->nullifyProps($data);
     }
 }

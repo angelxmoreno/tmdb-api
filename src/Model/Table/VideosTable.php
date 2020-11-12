@@ -2,11 +2,8 @@
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\NullMakerTrait;
-use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -27,8 +24,6 @@ use Cake\Validation\Validator;
  */
 class VideosTable extends Table
 {
-    use NullMakerTrait;
-
     /**
      * Initialize method
      *
@@ -44,6 +39,13 @@ class VideosTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('MarshalMapper', [
+            'mapper' => [
+                'site_uid' => 'key',
+            ],
+        ]);
+        $this->addBehavior('NullifyProps');
+
         $this->addBehavior('CounterCache', [
             'Movies' => ['videos_count']
         ]);
@@ -109,26 +111,5 @@ class VideosTable extends Table
         $rules->add($rules->existsIn(['movie_id'], 'Movies'));
 
         return $rules;
-    }
-
-
-    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
-    {
-        $map = [
-            'site_uid' => 'key',
-        ];
-
-        foreach ($map as $k => $v) {
-            if (!isset($data[$k]) && is_string($v)) {
-                $data[$k] = Hash::get($data, $v, null);
-            } elseif (!isset($data[$k]) && is_callable($v)) {
-                $data[$k] = $v($data);
-            }
-
-            if (is_string($data[$k])) {
-                trim($data[$k]);
-            }
-        }
-        $this->nullifyProps($data);
     }
 }

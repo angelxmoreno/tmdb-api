@@ -33,7 +33,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
- * @property \App\Model\Entity\Credit[] $credits
+ * @property \App\Model\Entity\Cast[] $casts
+ * @property \App\Model\Entity\Crew[] $crews
  * @property \App\Model\Entity\Video[] $videos
  * @property \App\Model\Entity\Genre[] $genres
  * @property \App\Model\Entity\Keyword[] $keywords
@@ -78,7 +79,8 @@ class Movie extends Entity
         'released' => true,
         'created' => true,
         'modified' => true,
-        'credits' => true,
+        'casts' => true,
+        'crews' => true,
         'videos' => true,
         'production_companies' => true,
         'genres' => true,

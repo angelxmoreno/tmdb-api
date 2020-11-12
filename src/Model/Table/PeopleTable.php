@@ -2,7 +2,11 @@
 
 namespace App\Model\Table;
 
+use App\Model\Behavior\NullMakerTrait;
+use App\Model\Behavior\PayloadFieldTrait;
+use Cake\Event\Event;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -24,6 +28,8 @@ use Cake\Validation\Validator;
  */
 class PeopleTable extends Table
 {
+    use NullMakerTrait;
+    use PayloadFieldTrait;
     /**
      * Initialize method
      *
@@ -110,10 +116,9 @@ class PeopleTable extends Table
             ->allowEmptyFile('profile_path');
 
         $validator
-            ->scalar('payload')
-            ->maxLength('payload', 4294967295)
+            ->isArray('payload')
             ->requirePresence('payload', 'create')
-            ->notEmptyString('payload');
+            ->notEmptyArray('payload');
 
         $validator
             ->date('birthday')
@@ -124,5 +129,47 @@ class PeopleTable extends Table
             ->allowEmptyDate('deathday');
 
         return $validator;
+    }
+
+
+    /**
+     * @param Event $event
+     * @param \ArrayObject $data
+     * @param \ArrayObject $options
+     */
+    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
+    {
+        $map = [
+            'payload' => function ($data) {
+                return (array)$data;
+            },
+            'is_adult' => function ($data) {
+                return !!Hash::get($data, 'adult', false);
+            },
+            'gender' => function ($data) {
+                $gender = Hash::get($data, 'gender', null);
+                if($gender === 1) {
+                    return 'f';
+                }
+                if($gender === 2) {
+                    return 'm';
+                }
+                return null;
+            },
+            'imdb_uid' => 'imdb_id',
+        ];
+
+        foreach ($map as $k => $v) {
+            if (is_string($v)) {
+                $data[$k] = Hash::get($data, $v, null);
+            } elseif (is_callable($v)) {
+                $data[$k] = $v($data);
+            }
+
+            if (is_string($data[$k])) {
+                trim($data[$k]);
+            }
+        }
+        $this->nullifyProps($data);
     }
 }

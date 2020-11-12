@@ -2,8 +2,11 @@
 
 namespace App\Model\Table;
 
+use App\Model\Behavior\NullMakerTrait;
+use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -25,6 +28,8 @@ use Cake\Validation\Validator;
  */
 class CastsTable extends Table
 {
+    use NullMakerTrait;
+
     /**
      * Initialize method
      *
@@ -60,8 +65,8 @@ class CastsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->nonNegativeInteger('id')
-            ->allowEmptyString('id', null, 'create');
+            ->scalar('id')
+            ->notEmptyString('id', null, 'create');
 
         $validator
             ->scalar('name')
@@ -70,17 +75,12 @@ class CastsTable extends Table
             ->notEmptyString('name');
 
         $validator
-            ->scalar('credit_uid')
-            ->maxLength('credit_uid', 50)
-            ->allowEmptyString('credit_uid');
-
-        $validator
             ->scalar('cast_uid')
             ->maxLength('cast_uid', 50)
             ->allowEmptyString('cast_uid');
 
         $validator
-            ->allowEmptyString('order');
+            ->allowEmptyString('position');
 
         return $validator;
     }
@@ -98,5 +98,34 @@ class CastsTable extends Table
         $rules->add($rules->existsIn(['person_id'], 'People'));
 
         return $rules;
+    }
+
+    /**
+     * @param Event $event
+     * @param \ArrayObject $data
+     * @param \ArrayObject $options
+     */
+    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
+    {
+        $map = [
+            'cast_uid' => 'cast_id',
+            'name' => 'character',
+            'person_id' => 'id',
+            'id' => 'cast_id',
+            'position' => 'order',
+        ];
+
+        foreach ($map as $k => $v) {
+            if (is_string($v)) {
+                $data[$k] = Hash::get($data, $v, null);
+            } elseif (is_callable($v)) {
+                $data[$k] = $v($data);
+            }
+
+            if (is_string($data[$k])) {
+                trim($data[$k]);
+            }
+        }
+        $this->nullifyProps($data);
     }
 }

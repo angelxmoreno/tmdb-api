@@ -7,13 +7,12 @@ use Cake\ORM\Entity;
 /**
  * Cast Entity
  *
- * @property int $id
+ * @property string $id
  * @property int $movie_id
  * @property int $person_id
  * @property string $name
- * @property string|null $credit_uid
  * @property string|null $cast_uid
- * @property int|null $order
+ * @property int|null $position
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
@@ -32,12 +31,12 @@ class Cast extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id' => true,
         'movie_id' => true,
         'person_id' => true,
         'name' => true,
-        'credit_uid' => true,
         'cast_uid' => true,
-        'order' => true,
+        'position' => true,
         'created' => true,
         'modified' => true,
         'movie' => true,

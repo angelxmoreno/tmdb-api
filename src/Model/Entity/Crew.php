@@ -7,12 +7,11 @@ use Cake\ORM\Entity;
 /**
  * Crew Entity
  *
- * @property int $id
+ * @property string $id
  * @property int $movie_id
  * @property int $person_id
  * @property string $job
  * @property string $department
- * @property string|null $credit_uid
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
@@ -31,11 +30,11 @@ class Crew extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id' => true,
         'movie_id' => true,
         'person_id' => true,
         'job' => true,
         'department' => true,
-        'credit_uid' => true,
         'created' => true,
         'modified' => true,
         'movie' => true,

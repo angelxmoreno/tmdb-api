@@ -49,11 +49,15 @@ class MoviesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Credits', [
+        $this->hasMany('Videos', [
             'foreignKey' => 'movie_id',
         ]);
 
-        $this->hasMany('Videos', [
+        $this->hasMany('Casts', [
+            'foreignKey' => 'movie_id',
+        ]);
+
+        $this->hasMany('Crews', [
             'foreignKey' => 'movie_id',
         ]);
 

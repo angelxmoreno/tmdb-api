@@ -33,6 +33,8 @@ class MovieBuilder extends BuilderBase
         VideoBuilder::buildFromRaw($movie, $data);
         ImageBuilder::buildFromRaw($movie, $data, 'images.posters', 'MoviePosters');
         ImageBuilder::buildFromRaw($movie, $data, 'images.backdrops', 'MovieBackDrops');
+        PersonBuilder::buildFromRaw($movie, $data, 'credits.cast', 'Casts');
+        PersonBuilder::buildFromRaw($movie, $data, 'credits.crew', 'Crews');
         return $movie;
     }
 

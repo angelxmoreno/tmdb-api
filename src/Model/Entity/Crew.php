@@ -8,12 +8,16 @@ use Cake\ORM\Entity;
  * Crew Entity
  *
  * @property int $id
- * @property string $name
- * @property string $payload
+ * @property int $movie_id
+ * @property int $person_id
+ * @property string $job
+ * @property string $department
+ * @property string|null $credit_uid
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
- * @property \App\Model\Entity\Credit[] $credits
+ * @property \App\Model\Entity\Movie $movie
+ * @property \App\Model\Entity\Person $person
  */
 class Crew extends Entity
 {
@@ -27,10 +31,14 @@ class Crew extends Entity
      * @var array
      */
     protected $_accessible = [
-        'name' => true,
-        'payload' => true,
+        'movie_id' => true,
+        'person_id' => true,
+        'job' => true,
+        'department' => true,
+        'credit_uid' => true,
         'created' => true,
         'modified' => true,
-        'credits' => true,
+        'movie' => true,
+        'person' => true,
     ];
 }

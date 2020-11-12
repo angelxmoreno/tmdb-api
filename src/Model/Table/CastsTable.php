@@ -2,13 +2,15 @@
 
 namespace App\Model\Table;
 
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * Casts Model
  *
- * @property \App\Model\Table\CreditsTable&\Cake\ORM\Association\HasMany $Credits
+ * @property \App\Model\Table\MoviesTable&\Cake\ORM\Association\BelongsTo $Movies
+ * @property \App\Model\Table\PeopleTable&\Cake\ORM\Association\BelongsTo $People
  *
  * @method \App\Model\Entity\Cast get($primaryKey, $options = [])
  * @method \App\Model\Entity\Cast newEntity($data = null, array $options = [])
@@ -39,8 +41,13 @@ class CastsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Credits', [
-            'foreignKey' => 'cast_id',
+        $this->belongsTo('Movies', [
+            'foreignKey' => 'movie_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('People', [
+            'foreignKey' => 'person_id',
+            'joinType' => 'INNER',
         ]);
     }
 
@@ -59,14 +66,37 @@ class CastsTable extends Table
         $validator
             ->scalar('name')
             ->maxLength('name', 200)
+            ->requirePresence('name', 'create')
             ->notEmptyString('name');
 
         $validator
-            ->scalar('payload')
-            ->maxLength('payload', 4294967295)
-            ->requirePresence('payload', 'create')
-            ->notEmptyString('payload');
+            ->scalar('credit_uid')
+            ->maxLength('credit_uid', 50)
+            ->allowEmptyString('credit_uid');
+
+        $validator
+            ->scalar('cast_uid')
+            ->maxLength('cast_uid', 50)
+            ->allowEmptyString('cast_uid');
+
+        $validator
+            ->allowEmptyString('order');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['movie_id'], 'Movies'));
+        $rules->add($rules->existsIn(['person_id'], 'People'));
+
+        return $rules;
     }
 }

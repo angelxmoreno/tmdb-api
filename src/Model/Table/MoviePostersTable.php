@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Behavior\ImageAssociationBehavior;
-use Cake\Event\Event;
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 
 /**
  * Class MoviePostersTable

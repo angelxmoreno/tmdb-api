@@ -2,21 +2,21 @@
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\PlaidItemsTable;
+use App\Model\Table\CrewsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\PlaidItemsTable Test Case
+ * App\Model\Table\CrewsTable Test Case
  */
-class PlaidItemsTableTest extends TestCase
+class CrewsTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\PlaidItemsTable
+     * @var \App\Model\Table\CrewsTable
      */
-    public $PlaidItems;
+    public $Crews;
 
     /**
      * Fixtures
@@ -24,10 +24,9 @@ class PlaidItemsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PlaidItems',
-        'app.Users',
-        'app.Institutions',
-        'app.Accounts',
+        'app.Crews',
+        'app.Movies',
+        'app.People',
     ];
 
     /**
@@ -38,8 +37,8 @@ class PlaidItemsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('PlaidItems') ? [] : ['className' => PlaidItemsTable::class];
-        $this->PlaidItems = TableRegistry::getTableLocator()->get('PlaidItems', $config);
+        $config = TableRegistry::getTableLocator()->exists('Crews') ? [] : ['className' => CrewsTable::class];
+        $this->Crews = TableRegistry::getTableLocator()->get('Crews', $config);
     }
 
     /**
@@ -49,7 +48,7 @@ class PlaidItemsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->PlaidItems);
+        unset($this->Crews);
 
         parent::tearDown();
     }

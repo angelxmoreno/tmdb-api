@@ -8,12 +8,17 @@ use Cake\ORM\Entity;
  * Cast Entity
  *
  * @property int $id
+ * @property int $movie_id
+ * @property int $person_id
  * @property string $name
- * @property string $payload
+ * @property string|null $credit_uid
+ * @property string|null $cast_uid
+ * @property int|null $order
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
- * @property \App\Model\Entity\Credit[] $credits
+ * @property \App\Model\Entity\Movie $movie
+ * @property \App\Model\Entity\Person $person
  */
 class Cast extends Entity
 {
@@ -27,10 +32,15 @@ class Cast extends Entity
      * @var array
      */
     protected $_accessible = [
+        'movie_id' => true,
+        'person_id' => true,
         'name' => true,
-        'payload' => true,
+        'credit_uid' => true,
+        'cast_uid' => true,
+        'order' => true,
         'created' => true,
         'modified' => true,
-        'credits' => true,
+        'movie' => true,
+        'person' => true,
     ];
 }

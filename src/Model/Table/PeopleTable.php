@@ -8,7 +8,8 @@ use Cake\Validation\Validator;
 /**
  * People Model
  *
- * @property \App\Model\Table\CreditsTable&\Cake\ORM\Association\HasMany $Credits
+ * @property \App\Model\Table\CastsTable&\Cake\ORM\Association\HasMany $Casts
+ * @property \App\Model\Table\CrewsTable&\Cake\ORM\Association\HasMany $Crews
  *
  * @method \App\Model\Entity\Person get($primaryKey, $options = [])
  * @method \App\Model\Entity\Person newEntity($data = null, array $options = [])
@@ -39,7 +40,10 @@ class PeopleTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Credits', [
+        $this->hasMany('Casts', [
+            'foreignKey' => 'person_id',
+        ]);
+        $this->hasMany('Crews', [
             'foreignKey' => 'person_id',
         ]);
     }
@@ -62,10 +66,62 @@ class PeopleTable extends Table
             ->notEmptyString('name');
 
         $validator
+            ->boolean('is_adult')
+            ->allowEmptyString('is_adult');
+
+        $validator
+            ->scalar('biography')
+            ->maxLength('biography', 4294967295)
+            ->allowEmptyString('biography');
+
+        $validator
+            ->scalar('gender')
+            ->maxLength('gender', 1)
+            ->allowEmptyString('gender');
+
+        $validator
+            ->scalar('homepage')
+            ->maxLength('homepage', 200)
+            ->allowEmptyString('homepage');
+
+        $validator
+            ->scalar('imdb_uid')
+            ->maxLength('imdb_uid', 50)
+            ->allowEmptyString('imdb_uid');
+
+        $validator
+            ->scalar('known_for_department')
+            ->maxLength('known_for_department', 200)
+            ->allowEmptyString('known_for_department');
+
+        $validator
+            ->scalar('place_of_birth')
+            ->maxLength('place_of_birth', 200)
+            ->allowEmptyString('place_of_birth');
+
+        $validator
+            ->decimal('popularity')
+            ->greaterThanOrEqual('popularity', 0)
+            ->allowEmptyString('popularity');
+
+        $validator
+            ->scalar('profile_path')
+            ->maxLength('profile_path', 200)
+            ->allowEmptyFile('profile_path');
+
+        $validator
             ->scalar('payload')
             ->maxLength('payload', 4294967295)
             ->requirePresence('payload', 'create')
             ->notEmptyString('payload');
+
+        $validator
+            ->date('birthday')
+            ->allowEmptyDate('birthday');
+
+        $validator
+            ->date('deathday')
+            ->allowEmptyDate('deathday');
 
         return $validator;
     }

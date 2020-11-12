@@ -29,7 +29,7 @@ class ImageBuilder extends BuilderBase
             $row['foreign_uid'] = $movie->id;
             return $row;
         })->toArray();
-        return self::save($image_data,$association);
+        return self::save($image_data, $association);
     }
 
     /**

@@ -54,7 +54,15 @@ class CastsTable extends Table
                 'cast_uid' => 'cast_id',
                 'name' => 'character',
                 'person_id' => 'id',
-                'id' => 'cast_id',
+                'id' => function ($data) {
+                    $found = $this->find()->where([
+                        'movie_id' => $data['movie_id'],
+                        'person_id' => $data['person_id'],
+                        'cast_uid' => $data['cast_uid'],
+                        'name' => $data['name'],
+                    ])->first();
+                    return !!$found ? $found->id : null;
+                },
                 'position' => 'order',
             ],
         ]);
@@ -75,9 +83,8 @@ class CastsTable extends Table
 
         $validator
             ->scalar('name')
-            ->maxLength('name', 200)
-            ->requirePresence('name', 'create')
-            ->notEmptyString('name');
+            ->maxLength('name', 65535)
+            ->allowEmptyString('name');
 
         $validator
             ->scalar('cast_uid')

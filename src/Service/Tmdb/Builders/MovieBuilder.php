@@ -32,7 +32,7 @@ class MovieBuilder extends BuilderBase
         self::linkProductionCompanies($movie, $production_companies);
         VideoBuilder::buildFromRaw($movie, $data);
         ImageBuilder::buildFromRaw($movie, $data, 'images.posters', 'MoviePosters');
-        ImageBuilder::buildFromRaw($movie, $data, 'images.backdrops', 'MovieBackDrops');
+        ImageBuilder::buildFromRaw($movie, $data, 'images.backdrops', 'MovieBackdrops');
         PersonBuilder::buildFromRaw($movie, $data, 'credits.cast', 'Casts');
         PersonBuilder::buildFromRaw($movie, $data, 'credits.crew', 'Crews');
         return $movie;

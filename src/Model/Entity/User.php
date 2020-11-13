@@ -2,7 +2,6 @@
 
 namespace App\Model\Entity;
 
-use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
@@ -14,10 +13,6 @@ use Cake\ORM\Entity;
  * @property string|null $password
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
- *
- * @property \App\Model\Entity\EnvelopeCategoryLink[] $envelope_category_links
- * @property \App\Model\Entity\Envelope[] $envelopes
- * @property \App\Model\Entity\PlaidItem[] $plaid_items
  */
 class User extends Entity
 {
@@ -36,9 +31,6 @@ class User extends Entity
         'password' => true,
         'created' => true,
         'modified' => true,
-        'envelope_category_links' => true,
-        'envelopes' => true,
-        'plaid_items' => true,
     ];
 
     /**
@@ -49,13 +41,4 @@ class User extends Entity
     protected $_hidden = [
         'password',
     ];
-
-    protected function _setPassword($value)
-    {
-        if (strlen($value)) {
-            $hasher = new DefaultPasswordHasher();
-
-            return $hasher->hash($value);
-        }
-    }
 }

@@ -25,9 +25,6 @@ class UsersTableTest extends TestCase
      */
     public $fixtures = [
         'app.Users',
-        'app.EnvelopeCategoryLinks',
-        'app.Envelopes',
-        'app.PlaidItems',
     ];
 
     /**

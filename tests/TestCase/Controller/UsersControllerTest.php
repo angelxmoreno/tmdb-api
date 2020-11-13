@@ -21,8 +21,6 @@ class UsersControllerTest extends TestCase
      */
     public $fixtures = [
         'app.Users',
-        'app.Envelopes',
-        'app.PlaidItems',
     ];
 
     /**

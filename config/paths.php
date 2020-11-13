@@ -87,3 +87,5 @@ define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'c
  */
 define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
+define('DOWNLOADS', TMP . 'downloads' . DS);
+define('MOVIE_LIST_DIR', DOWNLOADS . 'movie_list' . DS);

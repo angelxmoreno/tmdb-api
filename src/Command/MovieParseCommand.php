@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Model\Table\MoviesTable;
+use App\Service\Tmdb\Builders\ReviewBuilder;
 use App\Service\Tmdb\TmdbService;
 use Cake\Console\Arguments;
 use Cake\Console\Command;
@@ -59,11 +60,11 @@ class MovieParseCommand extends Command
 
     protected function main()
     {
-        $movie_id = $this->args->getArgument(self::MOVIE_ID);
+        $movie_id = (int)$this->args->getArgument(self::MOVIE_ID);
         $this->io->info("Fetching data for movie id $movie_id");
         try {
             $movie = $this->Tmdb->getMovie($movie_id);
-
+            $this->getMovieReviews($movie_id);
             $this->io->info(sprintf(
                 'Saved movie "%s"',
                 $movie->title
@@ -78,8 +79,19 @@ class MovieParseCommand extends Command
             pr($e->getTraceAsString());
             $this->io->hr();
         }
+    }
 
+    protected function getMovieReviews(int $movie_id, int $page = 1)
+    {
+        $this->io->info('Getting movie reviews page ' . $page);
+        $reviews = $this->Tmdb->getMovieReviews($movie_id);
+        $total_pages = $reviews['total_pages'];
+        $this->io->info('Savings movie reviews page ' . $page . ' of ' . $total_pages);
 
+        ReviewBuilder::buildFromRaw($reviews);
+        if ($total_pages > $page) {
+            $this->getMovieReviews($movie_id, $page + 1);
+        }
     }
 
     /**

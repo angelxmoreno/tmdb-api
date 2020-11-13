@@ -56,6 +56,10 @@ class MoviesTable extends Table
             'foreignKey' => 'movie_id',
         ]);
 
+        $this->hasMany('Reviews', [
+            'foreignKey' => 'movie_id',
+        ]);
+
         $this->hasMany('MoviePosters', [
             'foreignKey' => 'foreign_uid',
             'conditions' => [
@@ -213,6 +217,9 @@ class MoviesTable extends Table
 
         $validator
             ->notEmptyString('backdrops_count');
+
+        $validator
+            ->notEmptyString('reviews_count');
 
         $validator
             ->isArray('payload')

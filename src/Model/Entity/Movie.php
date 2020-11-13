@@ -28,6 +28,7 @@ use Cake\ORM\Entity;
  * @property int $videos_count
  * @property int $posters_count
  * @property int $backdrops_count
+ * @property int $reviews_count
  * @property string $payload
  * @property \Cake\I18n\FrozenDate|null $released
  * @property \Cake\I18n\FrozenTime|null $created
@@ -41,6 +42,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Company[] $production_companies
  * @property \App\Model\Entity\Image[] $posters
  * @property \App\Model\Entity\Image[] $backdrops
+ * @property \App\Model\Entity\Review[] $reviews
  */
 class Movie extends Entity
 {
@@ -75,6 +77,7 @@ class Movie extends Entity
         'videos_count' => true,
         'posters_count' => true,
         'backdrops_count' => true,
+        'reviews_count' => true,
         'payload' => true,
         'released' => true,
         'created' => true,
@@ -87,5 +90,6 @@ class Movie extends Entity
         'keywords' => true,
         'posters' => true,
         'backdrops' => true,
+        'reviews' => true,
     ];
 }

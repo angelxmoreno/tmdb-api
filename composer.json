@@ -14,7 +14,8 @@
         "firebase/php-jwt": "^5.2",
         "mobiledetect/mobiledetectlib": "2.*",
         "muffin/trash": "^2.1",
-        "pusher/pusher-php-server": "^4.1"
+        "pusher/pusher-php-server": "^4.1",
+        "symfony/http-client": "^5.1"
     },
     "require-dev": {
         "cakephp/bake": "^1.9.0",

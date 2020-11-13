@@ -8,7 +8,14 @@ use App\Service\Tmdb\Builders\MovieBuilder;
 use App\Service\Tmdb\Exceptions\InvalidMovieIdException;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Http\Client;
+use Cake\Utility\Hash;
+use Symfony\Component\HttpClient\CurlHttpClient;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class TmdbService
@@ -23,7 +30,7 @@ class TmdbService
     protected $api_key;
 
     /**
-     * @var Client
+     * @var HttpClientInterface
      */
     protected $http;
 
@@ -34,17 +41,20 @@ class TmdbService
     public function __construct(string $api_key = null)
     {
         $this->api_key = $api_key ?? Configure::read('Tmdb.api_key');
-        $this->http = new Client();
+        $this->http = new CurlHttpClient();
     }
 
     /**
-     * @param string|int $movie_id
+     * @param int $movie_id
      * @return Movie
      * @throws \Exception
      */
-    public function getMovie($movie_id): Movie
+    public function getMovie(int $movie_id): Movie
     {
-        $url = $this->buildMovieUrl($movie_id, []);
+        $url = $this->buildMovieUrl($movie_id, [
+            'include_image_language' => 'en',
+            'append_to_response' => 'credits,external_ids,images,keywords,release_dates,videos,reviews'
+        ]);
         $data = $this->httpGet($url);
         if (isset($data['success']) && $data['success'] === false) {
             throw new InvalidMovieIdException(compact('movie_id'));
@@ -53,29 +63,126 @@ class TmdbService
     }
 
     /**
-     * @param $movie_id
+     * @param int $movie_id
      * @param array $args
      * @return string
      */
-    protected function buildMovieUrl($movie_id, array $args = [])
+    protected function buildMovieUrl(int $movie_id, array $args = []): string
     {
-        return sprintf(
-            '%s/movie/%s?api_key=%s&language=en-US&&include_image_language=en&append_to_response=%s',
+        $args = array_merge($args, [
+            'language' => 'en-US',
+            'api_key' => $this->api_key
+        ]);
+        $url = sprintf(
+            '%s/movie/%s',
             self::BASE_URL,
-            $movie_id,
-            $this->api_key,
-            'credits,external_ids,images,keywords,release_dates,videos,reviews'
+            $movie_id
         );
+        return $url . '?' . http_build_query($args);
     }
 
+    /**
+     * @param string $url
+     * @return array
+     */
     protected function httpGet(string $url)
     {
         $cache_key = md5($url);
         return Cache::remember($cache_key, function () use ($url) {
-            $response = $this->http->get($url);
-            return $response->getJson();
+            $response = $this->http->request('GET', $url);
+
+            return $response->toArray();
+        });
+    }
+
+    /**
+     * @param int $movie_id
+     * @param int $page
+     * @return array
+     */
+    public function getMovieReviews(int $movie_id, int $page = 1): array
+    {
+        $url = $this->buildMovieReviewsUrl($movie_id, $page);
+        $data = $this->httpGet($url);
+        if (isset($data['success']) && $data['success'] === false) {
+            throw new InvalidMovieIdException(compact('movie_id'));
+        }
+        $ids = Hash::extract($data, 'results.{n}.id');
+        $data['results'] = $this->bulkGetReviewsByIds($ids);
+
+        return $data;
+    }
+
+    /**
+     * @param int $movie_id
+     * @param int $page
+     * @return string
+     */
+    protected function buildMovieReviewsUrl(int $movie_id, int $page = 1): string
+    {
+        $args = [
+            'page' => $page,
+            'language' => 'en-US',
+            'api_key' => $this->api_key
+        ];
+        $url = sprintf(
+            '%s/movie/%s/reviews',
+            self::BASE_URL,
+            $movie_id
+        );
+        return $url . '?' . http_build_query($args);
+    }
+
+    /**
+     * @param array $review_ids
+     * @return array
+     */
+    protected function bulkGetReviewsByIds(array $review_ids)
+    {
+        $cache_key = md5(serialize($review_ids));
+        return Cache::remember($cache_key, function () use ($review_ids) {
+
+            $results = [];
+
+            try {
+                $responses = [];
+                foreach ($review_ids as $review_id) {
+                    $url = $this->buildSingleReviewUrl($review_id);
+                    $responses[] = $this->http->request('GET', $url);
+                }
+
+                foreach ($responses as $response) {
+                    $results[] = $response->toArray();
+                }
+            } catch (\Exception $e) {
+            } catch (TransportExceptionInterface $e) {
+            } catch (ClientExceptionInterface $e) {
+            } catch (DecodingExceptionInterface $e) {
+            } catch (RedirectionExceptionInterface $e) {
+            } catch (ServerExceptionInterface $e) {
+            }
+
+            return $results;
         });
 
+    }
+
+    /**
+     * @param string $review_id
+     * @return string
+     */
+    protected function buildSingleReviewUrl(string $review_id): string
+    {
+        $args = [
+            'language' => 'en-US',
+            'api_key' => $this->api_key
+        ];
+        $url = sprintf(
+            '%s/review/%s',
+            self::BASE_URL,
+            $review_id
+        );
+        return $url . '?' . http_build_query($args);
     }
 
     protected function buildMovieInstance(array $data)
@@ -83,7 +190,6 @@ class TmdbService
         //movie
         // add external ids to people and movies
         // build and tie release dates, maybe
-        // iterate through review then build and tie each
 
     }
 }

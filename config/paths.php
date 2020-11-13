@@ -89,3 +89,4 @@ define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
 define('DOWNLOADS', TMP . 'downloads' . DS);
 define('MOVIE_LIST_DIR', DOWNLOADS . 'movie_list' . DS);
+define('MOVIE_IMAGES_DIR', DOWNLOADS . 'movie_images' . DS);

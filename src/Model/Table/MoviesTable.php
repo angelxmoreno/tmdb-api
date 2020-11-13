@@ -64,7 +64,7 @@ class MoviesTable extends Table
             'foreignKey' => 'foreign_uid',
             'conditions' => [
                 'MoviePosters.type' => 'posters',
-                'MoviePosters.foreign_model' => 'movies',
+                'MoviePosters.foreign_model' => 'Movies',
             ],
             'propertyName' => 'posters'
         ]);
@@ -73,7 +73,7 @@ class MoviesTable extends Table
             'foreignKey' => 'foreign_uid',
             'conditions' => [
                 'MovieBackdrops.type' => 'backdrops',
-                'MovieBackdrops.foreign_model' => 'movies',
+                'MovieBackdrops.foreign_model' => 'Movies',
             ],
             'propertyName' => 'backdrops'
         ]);
@@ -141,7 +141,6 @@ class MoviesTable extends Table
 
         $validator
             ->scalar('overview')
-            ->maxLength('overview', 4294967295)
             ->allowEmptyString('overview');
 
         $validator
@@ -208,6 +207,11 @@ class MoviesTable extends Table
             ->scalar('twitter_uid')
             ->maxLength('twitter_uid', 50)
             ->allowEmptyString('twitter_uid');
+
+        $validator
+            ->scalar('backdrop_path')
+            ->maxLength('backdrop_path', 200)
+            ->allowEmptyFile('backdrop_path');
 
         $validator
             ->notEmptyString('videos_count');

@@ -29,6 +29,7 @@ use Cake\ORM\Entity;
  * @property int $posters_count
  * @property int $backdrops_count
  * @property int $reviews_count
+ * @property string $backdrop_path
  * @property string $payload
  * @property \Cake\I18n\FrozenDate|null $released
  * @property \Cake\I18n\FrozenTime|null $created
@@ -78,6 +79,7 @@ class Movie extends Entity
         'posters_count' => true,
         'backdrops_count' => true,
         'reviews_count' => true,
+        'backdrop_path' => true,
         'payload' => true,
         'released' => true,
         'created' => true,

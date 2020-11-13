@@ -29,7 +29,7 @@ copy-id_rsa: ## copies local id_rsa to server
 	 scp ~/.ssh/id_rsa.pub majyvm29gtia@107.180.44.147:.ssh/authorized_keys
 
 copy-env: ## copies local id_rsa to server
-	 scp prod.env fivetale@mi3-ls12.a2hosting.com:~/angelbudget.fivetalents.software/cake-angelbudget/.env -p 7822
+	 scp -P 7822 prod.env fivetale@mi3-ls12.a2hosting.com:~/tmdbapi.fivetalents.software/.env
 
 prod: ## ssh into prod server
-	ssh fivetale@mi3-ls12.a2hosting.com -p 7822
+	ssh fivetale@mi3-ls12.a2hosting.com -p 7822 -t "cd ~/tmdbapi.fivetalents.software/ ; bash"

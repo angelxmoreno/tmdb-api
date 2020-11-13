@@ -53,7 +53,7 @@ class TmdbService
     {
         $url = $this->buildMovieUrl($movie_id, [
             'include_image_language' => 'en',
-            'append_to_response' => 'credits,external_ids,images,keywords,release_dates,videos,reviews'
+            'append_to_response' => 'credits,external_ids,images,keywords,release_dates,videos'
         ]);
         $data = $this->httpGet($url);
         if (isset($data['success']) && $data['success'] === false) {

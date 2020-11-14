@@ -6,9 +6,6 @@ namespace App\Command;
 use App\Model\Table\MoviesTable;
 use App\Service\Tmdb\Builders\ReviewBuilder;
 use App\Service\Tmdb\TmdbService;
-use Cake\Console\Arguments;
-use Cake\Console\Command;
-use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 
 /**
@@ -16,23 +13,13 @@ use Cake\Console\ConsoleOptionParser;
  *
  * @property-read MoviesTable $Movies
  */
-class MovieParseCommand extends Command
+class MovieParseCommand extends BaseCommand
 {
     const MOVIE_ID = 'movie_id';
     /**
      * @var TmdbService
      */
     protected $Tmdb;
-
-    /**
-     * @var ConsoleIo
-     */
-    protected $io;
-
-    /**
-     * @var Arguments
-     */
-    protected $args;
 
     /**
      * Hook method invoked by CakePHP when a command is about to be executed.
@@ -44,18 +31,6 @@ class MovieParseCommand extends Command
         parent::initialize();
         $this->loadModel('Movies');
         $this->Tmdb = new TmdbService();
-    }
-
-    /**
-     * @param Arguments $args
-     * @param ConsoleIo $io
-     * @return int|void|null
-     */
-    public function execute(Arguments $args, ConsoleIo $io)
-    {
-        $this->io = $io;
-        $this->args = $args;
-        $this->main();
     }
 
     protected function main()
@@ -81,6 +56,11 @@ class MovieParseCommand extends Command
         }
     }
 
+    /**
+     * @param int $movie_id
+     * @param int $page
+     * @throws \Exception
+     */
     protected function getMovieReviews(int $movie_id, int $page = 1)
     {
         $this->io->info('Getting movie reviews page ' . $page);

@@ -14,6 +14,9 @@ use Cake\ORM\Entity;
  * @property bool $video
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
+ *
+ *
+ * @property Movie $movie
  */
 class ValidMovie extends Entity
 {
@@ -32,6 +35,7 @@ class ValidMovie extends Entity
         'popularity' => true,
         'adult' => true,
         'video' => true,
+        'movie' => true,
         'created' => true,
         'modified' => true,
     ];

@@ -37,6 +37,10 @@ class ValidMoviesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->hasOne('Movies', [
+            'foreignKey' => 'id'
+        ]);
     }
 
     /**
@@ -86,5 +90,15 @@ class ValidMoviesTable extends Table
         }
         $entity = $this->newEntity($data);
         return $this->save($entity);
+    }
+
+
+    public function findMissingSyncs(int $page = 1, int $limit = 500)
+    {
+        return $this
+            ->find()
+            ->notMatching('Movies')
+            ->orderDesc('ValidMovies.popularity')
+            ->page($page, $limit);
     }
 }

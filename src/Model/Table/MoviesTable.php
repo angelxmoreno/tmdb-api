@@ -211,7 +211,12 @@ class MoviesTable extends Table
         $validator
             ->scalar('backdrop_path')
             ->maxLength('backdrop_path', 200)
-            ->allowEmptyFile('backdrop_path');
+            ->allowEmptyString('backdrop_path');
+
+        $validator
+            ->scalar('poster_path')
+            ->maxLength('poster_path', 200)
+            ->allowEmptyString('poster_path');
 
         $validator
             ->notEmptyString('videos_count');

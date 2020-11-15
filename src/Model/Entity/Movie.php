@@ -3,6 +3,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 
 /**
  * Movie Entity
@@ -30,6 +31,9 @@ use Cake\ORM\Entity;
  * @property int $backdrops_count
  * @property int $reviews_count
  * @property string $backdrop_path
+ * @property string $backdrop_image_url
+ * @property string $poster_path
+ * @property string $poster_image_url
  * @property string $payload
  * @property \Cake\I18n\FrozenDate|null $released
  * @property \Cake\I18n\FrozenTime|null $created
@@ -47,6 +51,8 @@ use Cake\ORM\Entity;
  */
 class Movie extends Entity
 {
+    protected $_virtual = ['backdrop_image_url', 'poster_image_url'];
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -80,6 +86,7 @@ class Movie extends Entity
         'backdrops_count' => true,
         'reviews_count' => true,
         'backdrop_path' => true,
+        'poster_path' => true,
         'payload' => true,
         'released' => true,
         'created' => true,
@@ -94,4 +101,27 @@ class Movie extends Entity
         'backdrops' => true,
         'reviews' => true,
     ];
+
+    protected function _getBackdropImageUrl()
+    {
+        return Router::url([
+            'plugin' => null,
+            'controller' => 'ImageService',
+            'action' => 'byMovieId',
+            'backdrops',
+            $this->id . '.png'
+        ]);
+    }
+
+
+    protected function _getPosterImageUrl()
+    {
+        return Router::url([
+            'plugin' => null,
+            'controller' => 'ImageService',
+            'action' => 'byMovieId',
+            'posters',
+            $this->id . '.png'
+        ]);
+    }
 }

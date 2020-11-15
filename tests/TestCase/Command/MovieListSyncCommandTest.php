@@ -1,7 +1,7 @@
 <?php
+
 namespace App\Test\TestCase\Command;
 
-use App\Command\MovieListSyncCommand;
 use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -24,6 +24,7 @@ class MovieListSyncCommandTest extends TestCase
         parent::setUp();
         $this->useCommandRunner();
     }
+
     /**
      * Test buildOptionParser method
      *

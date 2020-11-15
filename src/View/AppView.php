@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -25,7 +26,6 @@ use Cake\View\View;
  */
 class AppView extends View
 {
-
     /**
      * Initialization hook method.
      *
@@ -37,5 +37,15 @@ class AppView extends View
      */
     public function initialize()
     {
+        $helpers = [
+            'Html' => ['className' => 'BootstrapUI.Html'],
+            'Form' => ['className' => 'BootstrapUI.Form'],
+            'Flash' => ['className' => 'BootstrapUI.Flash'],
+            'Paginator' => ['className' => 'BootstrapUI.Paginator'],
+            'Breadcrumbs' => ['className' => 'BootstrapUI.Breadcrumbs'],
+        ];
+
+        $this->helpers = array_merge($helpers, $this->helpers);
+
     }
 }

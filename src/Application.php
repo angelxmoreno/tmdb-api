@@ -35,6 +35,7 @@ class Application extends BaseApplication
      */
     public function bootstrap()
     {
+        $this->addPlugin('BootstrapUI');
         $this->addPlugin('Muffin/Trash');
         $this->addPlugin(\Connehito\CakeSentry\Plugin::class);
 

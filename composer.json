@@ -12,6 +12,7 @@
         "cakephp/plugin-installer": "^1.0",
         "connehito/cake-sentry": "^2.0",
         "firebase/php-jwt": "^5.2",
+        "friendsofcake/bootstrap-ui": "2.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "muffin/trash": "^2.1",
         "pusher/pusher-php-server": "^4.1",
@@ -56,5 +57,6 @@
     "prefer-stable": true,
     "config": {
         "sort-packages": true
-    }
+    },
+    "minimum-stability": "dev"
 }

@@ -22,6 +22,17 @@ use App\View\AppView;
         <? foreach ($movies as $index => $movie): ?>
             <div class="carousel-item<?= $index === 0 ? ' active' : '' ?>">
                 <img src="<?= $movie->backdrop_image_url ?>" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>
+                        <?= $this->Html->link($movie->title, [
+                            'plugin' => null,
+                            'controller' => 'Movies',
+                            'action' => 'view',
+                            $movie->id
+                        ], ['style' => 'text-decoration:none; color:white']) ?>
+                    </h5>
+                    <p><?= $movie->tagline ?></p>
+                </div>
             </div>
         <? endforeach; ?>
 

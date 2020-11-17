@@ -7,11 +7,19 @@ use App\View\AppView;
  * @var AppView $this
  */
 
+$poster_rows = [
+    'Popular' => 'popular',
+    'Top Rated' => 'topRated',
+    'Upcoming' => 'upcoming',
+    'Top Viewed' => 'topViewed',
+];
+$limit = 6;
 ?>
 
 <div class="container">
     <?= $this->cell('MovieSlider', ['limit' => 10], ['cache' => true])->render(); ?>
 </div>
-
-<h2>Top Rated</h2>
-<?= $this->cell('MovieCards', ['limit' => 5], ['cache' => true])->render(); ?>
+<? foreach ($poster_rows as $title => $query): ?>
+    <h2><?= $title ?> Movies</h2>
+    <?= $this->cell('MovieCards', compact('limit', 'query'), ['cache' => true])->render(); ?>
+<? endforeach; ?>

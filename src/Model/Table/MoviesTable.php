@@ -3,6 +3,8 @@
 namespace App\Model\Table;
 
 use App\Model\Behavior\PayloadFieldTrait;
+use Cake\Chronos\Date;
+use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
@@ -240,5 +242,57 @@ class MoviesTable extends Table
             ->allowEmptyDate('released');
 
         return $validator;
+    }
+
+    /**
+     * @param Query $query
+     * @return Query
+     */
+    public function findPopular(Query $query): Query
+    {
+        return $query
+            ->orderDesc('popularity')
+            ->where(['status' => 'Released'])
+            ->whereNotNull('poster_path');
+    }
+
+    /**
+     * @param Query $query
+     * @return Query
+     */
+    public function findTopRated(Query $query): Query
+    {
+        return $query
+            ->orderDesc('vote_average')
+            ->orderDesc('vote_count')
+            ->where(['status' => 'Released'])
+            ->whereNotNull('poster_path');
+    }
+
+    /**
+     * @param Query $query
+     * @return Query
+     */
+    public function findTopViewed(Query $query): Query
+    {
+        return $query
+            ->orderDesc('vote_count')
+            ->orderDesc('vote_average')
+            ->where(['status' => 'Released'])
+            ->whereNotNull('poster_path');
+    }
+
+
+    /**
+     * @param Query $query
+     * @return Query
+     */
+    public function findUpcoming(Query $query): Query
+    {
+        return $query
+            ->orderDesc('popularity')
+            ->orderDesc('vote_average')
+            ->where(['released >' => Date::now()])
+            ->whereNotNull('poster_path');
     }
 }

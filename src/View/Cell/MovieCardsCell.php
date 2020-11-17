@@ -35,14 +35,13 @@ class MovieCardsCell extends Cell
      * Default display method.
      *
      * @param int $limit
+     * @param string $query_name
      * @return void
      */
-    public function display($limit = 5)
+    public function display(int $limit = 5, string $query_name = 'all')
     {
         $movies = $this->Movies
-            ->find()
-            ->orderDesc('vote_count')
-            ->whereNotNull('backdrop_path')
+            ->find($query_name)
             ->limit($limit)
             ->all();
         $this->set(compact('movies'));

@@ -8,15 +8,48 @@ use App\View\AppView;
  * @var AppView $this
  * @var Movie[] $movies
  */
+$movie_props = [
+    'Status' => 'status',
+    'Popularity' => 'popularity',
+    'Votes' => 'vote_count',
+    'Rating' => 'vote_average',
 
+]
 ?>
-<div class="card-group">
+
+<div class="row row-cols-1 row-cols-md-6 row-cols-sm-4">
     <? foreach ($movies as $movie): ?>
-        <div class="card">
-            <img src="<?= $movie->poster_image_url ?>" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title"><?= $movie->title ?></h5>
-                <p class="card-text"><small class="text-muted">Status: <?= $movie->status ?></small></p>
+        <div class="col">
+            <div class="card movie-card" onclick="location.href='<?= $this->Url->build([
+                'plugin' => null,
+                'controller' => 'Movies',
+                'action' => 'view',
+                $movie->id
+            ]) ?>'">
+                <?= $this->Html->image($movie->poster_image_url, [
+                    'class' => 'card-img-top',
+                    'alt' => $movie->title,
+                    'url' => [
+                        'plugin' => null,
+                        'controller' => 'Movies',
+                        'action' => 'view',
+                        $movie->id
+                    ]
+                ]) ?>
+
+                <div class="card-body">
+                    <h5 class="card-title"><?= $movie->title ?></h5>
+                    <p class="card-text">
+                        <? foreach ($movie_props as $title => $prop): ?>
+                            <? if ($value = $movie->get($prop)): ?>
+                                <small class="text-muted">
+                                    <b><?= $title ?>: </b>
+                                    <?= is_numeric($value) ? number_format($value) : $value ?>
+                                </small><br/>
+                            <? endif; ?>
+                        <? endforeach; ?>
+                    </p>
+                </div>
             </div>
         </div>
     <? endforeach; ?>

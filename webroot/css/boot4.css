@@ -1,0 +1,8 @@
+.movie-card {
+    width: 14rem;
+    cursor: pointer;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.35);
+}

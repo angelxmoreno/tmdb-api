@@ -41,7 +41,7 @@ class MovieSliderCell extends Cell
     {
         $movies = $this->Movies
             ->find()
-            ->orderDesc('popularity')
+            ->orderDesc('modified')
             ->whereNotNull('backdrop_path')
             ->limit($limit)
             ->all();

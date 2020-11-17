@@ -17,9 +17,13 @@ $limit = 6;
 ?>
 
 <div class="container">
-    <?= $this->cell('MovieSlider', ['limit' => 10], ['cache' => true])->render(); ?>
+    <?= $this->cell('MovieSlider', ['limit' => 10], [
+        'cache' => ['key' => 'MovieSlider']
+    ])->render(); ?>
 </div>
 <? foreach ($poster_rows as $title => $query): ?>
     <h2><?= $title ?> Movies</h2>
-    <?= $this->cell('MovieCards', compact('limit', 'query'), ['cache' => true])->render(); ?>
+    <?= $this->cell('MovieCards', compact('limit', 'query'), [
+        'cache' => ['key' => 'MovieCards_' . $query]
+    ])->render(); ?>
 <? endforeach; ?>

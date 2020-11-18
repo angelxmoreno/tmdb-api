@@ -3,6 +3,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 
 /**
  * Image Entity
@@ -12,6 +13,7 @@ use Cake\ORM\Entity;
  * @property int $foreign_uid
  * @property string $type
  * @property string $file_path
+ * @property string $image_url
  * @property int|null $height
  * @property int|null $width
  * @property int|null $vote_count
@@ -22,6 +24,8 @@ use Cake\ORM\Entity;
  */
 class Image extends Entity
 {
+    protected $_virtual = ['image_url'];
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -45,4 +49,14 @@ class Image extends Entity
         'created' => true,
         'modified' => true,
     ];
+
+    protected function _getImageUrl()
+    {
+        return Router::url([
+            'plugin' => null,
+            'controller' => 'ImageService',
+            'action' => 'byImageId',
+            $this->id . '.png'
+        ]);
+    }
 }

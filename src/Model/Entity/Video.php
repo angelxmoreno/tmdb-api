@@ -14,6 +14,7 @@ use Cake\ORM\Entity;
  * @property string|null $iso_3166_1
  * @property string|null $site_uid
  * @property string|null $site
+ * @property string|null $image_url
  * @property int|null $size
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
@@ -22,6 +23,8 @@ use Cake\ORM\Entity;
  */
 class Video extends Entity
 {
+    protected $_virtual = ['image_url'];
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -44,4 +47,18 @@ class Video extends Entity
         'modified' => true,
         'movie' => true,
     ];
+
+    protected function _getImageUrl()
+    {
+        switch (strtolower($this->site)) {
+            case 'youtube':
+                $url = 'https://img.youtube.com/vi/' . $this->site_uid . '/mqdefault.jpg';
+                break;
+
+            default:
+                $url = '/img/no-image.png';
+                break;
+        }
+        return $url;
+    }
 }

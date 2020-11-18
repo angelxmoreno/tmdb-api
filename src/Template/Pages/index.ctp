@@ -24,6 +24,6 @@ $limit = 6;
 <? foreach ($poster_rows as $title => $query): ?>
     <h2><?= $title ?> Movies</h2>
     <?= $this->cell('MovieCards', compact('limit', 'query'), [
-        'cache' => ['key' => 'MovieCards_' . $query]
+        'cache' => ['key' => 'MovieCards_2' . $query]
     ])->render(); ?>
 <? endforeach; ?>

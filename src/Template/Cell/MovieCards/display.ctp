@@ -20,25 +20,27 @@ $movie_props = [
 <div class="row row-cols-1 row-cols-md-6 row-cols-sm-4">
     <? foreach ($movies as $movie): ?>
         <div class="col">
-            <div class="card movie-card" onclick="location.href='<?= $this->Url->build([
-                'plugin' => null,
-                'controller' => 'Movies',
-                'action' => 'view',
-                $movie->id
-            ]) ?>'">
+            <div class="card movie-card">
                 <?= $this->Html->image($movie->poster_image_url, [
                     'class' => 'card-img-top',
                     'alt' => $movie->title,
                     'url' => [
-                        'plugin' => null,
-                        'controller' => 'Movies',
-                        'action' => 'view',
-                        $movie->id
+
                     ]
                 ]) ?>
 
                 <div class="card-body">
-                    <h5 class="card-title"><?= $movie->title ?></h5>
+                    <h5 class="card-title">
+                        <?= $this->Html->link($movie->title, [
+                            'plugin' => null,
+                            'controller' => 'Movies',
+                            'action' => 'view',
+                            $movie->id
+                        ], [
+                            'class' => "stretched-link",
+                            'style' => "text-decoration: none;color: inherit"
+                        ]) ?>
+                    </h5>
                     <p class="card-text">
                         <? foreach ($movie_props as $title => $prop): ?>
                             <? if ($value = $movie->get($prop)): ?>

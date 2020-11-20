@@ -15,7 +15,12 @@ $social_accounts = [
         'format' => '%s'
     ],
     [
-        'title' => 'Imdb',
+        'title' => 'TMDB',
+        'prop' => 'id',
+        'format' => 'https://www.themoviedb.org/movie/%s'
+    ],
+    [
+        'title' => 'IMDB',
         'prop' => 'imdb_uid',
         'format' => 'https://www.imdb.com/title/%s/'
     ],

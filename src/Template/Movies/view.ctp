@@ -8,14 +8,14 @@ use App\View\AppView;
  * @var AppView $this
  * @var Movie $movie
  */
-$first_tab_title = 'Backdrops';
+$first_tab_title = 'Crew';
 $tabs = [
     'Info' => 'basic_info',
     'Videos'=>'videos',
     'Posters'=>'posters',
     'Backdrops'=>'backdrops',
-    'Crew'=>'basic_info',
-    'Cast'=>'basic_info',
+    'Cast'=>'casts',
+    'Crew'=>'crews',
     'Reviews'=>'basic_info',
     'Production Companies'=>'basic_info',
 ];

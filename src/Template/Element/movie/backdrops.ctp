@@ -16,7 +16,7 @@ use App\View\AppView;
     <div class="row">
         <? foreach ($movie->backdrops as $backdrop): ?>
             <div class="col-md-3 pb-1">
-                <?=$this->Html->image($backdrop->image_url,['class'=>'img-fluid']) ?>
+                <?= $this->Html->image($backdrop->image_url, ['class' => 'img-fluid']) ?>
             </div>
         <? endforeach; ?>
     </div>

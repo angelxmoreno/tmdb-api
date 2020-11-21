@@ -30,19 +30,6 @@ trait ImageServiceMethods
     }
 
     /**
-     * @param \DateTimeInterface $modified
-     * @return \Cake\Http\Response|null
-     */
-    protected function getImageResponseHeaders(\DateTimeInterface $modified)
-    {
-        return $this->getResponse()
-            ->withSharable(true, 60 * 60 * 24 * 365)
-            ->withExpires('+365 days')
-            ->withModified($modified)
-            ->withEtag(md5($modified->format(\DATE_W3C)));
-    }
-
-    /**
      * @param string $type
      * @param int $movie_id
      * @param string $file_path
@@ -70,6 +57,15 @@ trait ImageServiceMethods
         return $image_path;
     }
 
+    /**
+     * @param string $type
+     * @param int $id
+     * @return string
+     */
+    protected function getMovieImageDir(string $type, int $id): string
+    {
+        return MOVIE_IMAGES_DIR . 'Movies' . DS . $id . DS . $type;
+    }
 
     /**
      * @param int $person_id
@@ -99,22 +95,12 @@ trait ImageServiceMethods
     }
 
     /**
-     * @param string $type
-     * @param int $id
-     * @return string
-     */
-    protected function getMovieImageDir(string $type, int $id): string
-    {
-        return MOVIE_IMAGES_DIR . 'Movies' . DS . $id . DS . $type;
-    }
-
-    /**
      * @param int $id
      * @return string
      */
     protected function getPersonImageDir(int $id): string
     {
-        return MOVIE_IMAGES_DIR . 'People' . DS . $id ;
+        return MOVIE_IMAGES_DIR . 'People' . DS . $id;
     }
 
     /**
@@ -127,6 +113,18 @@ trait ImageServiceMethods
         return $this->getImageResponseHeaders($modified)->withFile($image_path);
     }
 
+    /**
+     * @param \DateTimeInterface $modified
+     * @return \Cake\Http\Response|null
+     */
+    protected function getImageResponseHeaders(\DateTimeInterface $modified)
+    {
+        return $this->getResponse()
+            ->withSharable(true, 60 * 60 * 24 * 365)
+            ->withExpires('+365 days')
+            ->withModified($modified)
+            ->withEtag(md5($modified->format(\DATE_W3C)));
+    }
 
     /**
      * @param int $id

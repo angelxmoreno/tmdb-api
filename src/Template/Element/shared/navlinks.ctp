@@ -11,11 +11,11 @@ $nav_links = $nav_links ?? [];
 foreach ($nav_links as $name => $url_parts) {
     $url = $this->Url->build($url_parts);
     $active = $this->getRequest()->getRequestTarget() === $url
-    ?'active'
+        ? 'active'
         : '';
     ?>
 
-    <li class="nav-item <?=$active?>">
+    <li class="nav-item <?= $active ?>">
         <?= $this->Html->link($name, $url, ['class' => 'nav-link']) ?>
     </li>
 <?php } ?>

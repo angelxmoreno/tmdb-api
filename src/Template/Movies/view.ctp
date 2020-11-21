@@ -11,12 +11,12 @@ use App\View\AppView;
 $first_tab_title = 'Reviews';
 $tabs = [
     'Info' => 'basic_info',
-    'Videos'=>'videos',
-    'Posters'=>'posters',
-    'Backdrops'=>'backdrops',
-    'Cast'=>'casts',
-    'Crew'=>'crews',
-    'Reviews'=>'reviews',
+    'Videos' => 'videos',
+    'Posters' => 'posters',
+    'Backdrops' => 'backdrops',
+    'Cast' => 'casts',
+    'Crew' => 'crews',
+    'Reviews' => 'reviews',
 ];
 ?>
 <div class="container hidden">
@@ -56,7 +56,7 @@ $tabs = [
                     </tr>
                     <tr>
                         <th scope="row"><?= __('Released') ?></th>
-                        <td><?=$movie->released?$movie->released->nice():'Unknown' ?></td>
+                        <td><?= $movie->released ? $movie->released->nice() : 'Unknown' ?></td>
                     </tr>
                     <tr>
                         <th scope="row"><?= __('Vote Count') ?></th>
@@ -82,10 +82,11 @@ $tabs = [
         <? foreach ($tabs as $title => $element): ?>
             <li class="nav-item" role="presentation">
                 <a
-                    id="movie_<?=$element?>-tab"
+                    id="movie_<?= $element ?>-tab"
                     data-toggle="tab"
-                    href="#<?=$element?>"
-                    aria-controls="movie_<?=$element?>" aria-selected="<?= $first_tab_title === $title ? 'true' : 'false' ?>"
+                    href="#<?= $element ?>"
+                    aria-controls="movie_<?= $element ?>"
+                    aria-selected="<?= $first_tab_title === $title ? 'true' : 'false' ?>"
                     class="nav-link<?= $first_tab_title === $title ? ' active' : '' ?>"
                 >
                     <?= $title ?>
@@ -96,8 +97,9 @@ $tabs = [
     <div class="tab-content" id="myTabContent">
         <p/>
         <? foreach ($tabs as $title => $element): ?>
-            <div class="tab-pane fade<?= $first_tab_title === $title ? ' show active' : '' ?>" id="<?=$element?>" role="tabpanel" aria-labelledby="movie_<?=$element?>-tab">
-                <?=$this->element('movie/'.$element, compact('movie'))?>
+            <div class="tab-pane fade<?= $first_tab_title === $title ? ' show active' : '' ?>" id="<?= $element ?>"
+                 role="tabpanel" aria-labelledby="movie_<?= $element ?>-tab">
+                <?= $this->element('movie/' . $element, compact('movie')) ?>
             </div>
         <? endforeach; ?>
     </div>

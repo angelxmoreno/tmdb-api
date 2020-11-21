@@ -16,7 +16,7 @@ use App\View\AppView;
     <div class="row">
         <? foreach ($movie->posters as $poster): ?>
             <div class="col-md-2 pb-1">
-                <?=$this->Html->image($poster->image_url,['class'=>'img-fluid']) ?>
+                <?= $this->Html->image($poster->image_url, ['class' => 'img-fluid']) ?>
             </div>
         <? endforeach; ?>
     </div>

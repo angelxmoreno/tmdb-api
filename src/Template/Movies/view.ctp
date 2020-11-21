@@ -8,7 +8,7 @@ use App\View\AppView;
  * @var AppView $this
  * @var Movie $movie
  */
-$first_tab_title = 'Crew';
+$first_tab_title = 'Reviews';
 $tabs = [
     'Info' => 'basic_info',
     'Videos'=>'videos',
@@ -16,8 +16,7 @@ $tabs = [
     'Backdrops'=>'backdrops',
     'Cast'=>'casts',
     'Crew'=>'crews',
-    'Reviews'=>'basic_info',
-    'Production Companies'=>'basic_info',
+    'Reviews'=>'reviews',
 ];
 ?>
 <div class="container hidden">

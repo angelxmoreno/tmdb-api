@@ -66,11 +66,13 @@ class Person extends Entity
 
     protected function _getImageUrl()
     {
-        return Router::url([
-            'plugin' => null,
-            'controller' => 'ImageService',
-            'action' => 'byPersonId',
-            $this->id . '.png'
-        ]);
+        return $this->profile_path
+            ? Router::url([
+                'plugin' => null,
+                'controller' => 'ImageService',
+                'action' => 'byPersonId',
+                $this->id . '.png'
+            ])
+            : null;
     }
 }

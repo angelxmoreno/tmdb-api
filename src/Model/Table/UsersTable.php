@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
@@ -66,6 +67,12 @@ class UsersTable extends Table
             ->maxLength('password', 200)
             ->allowEmptyString('password');
 
+        $validator
+            ->scalar('api_key')
+            ->maxLength('api_key', 32)
+            ->allowEmptyString('api_key')
+            ->add('api_key', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
         return $validator;
     }
 
@@ -79,6 +86,7 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->isUnique(['api_key']));
 
         return $rules;
     }

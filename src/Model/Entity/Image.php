@@ -25,6 +25,7 @@ use Cake\Routing\Router;
 class Image extends Entity
 {
     protected $_virtual = ['image_url'];
+    protected $_hidden = ['foreign_model', 'foreign_uid', 'type', 'file_path'];
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -53,10 +54,11 @@ class Image extends Entity
     protected function _getImageUrl()
     {
         return Router::url([
+            'prefix' => false,
             'plugin' => null,
             'controller' => 'ImageService',
             'action' => 'byImageId',
             $this->id . '.png'
-        ]);
+        ], true);
     }
 }

@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Component;
 
+use App\Model\Entity\Company;
 use App\Model\Entity\Image;
 use App\Model\Entity\Movie;
 use App\Model\Entity\Person;
+use App\Model\Entity\Reviewer;
 use Cake\Cache\Cache;
 use Cake\Core\Exception\Exception;
 
@@ -20,13 +22,26 @@ trait ImageServiceMethods
      * @param string $pseudo_image_file
      * @return int
      */
-    protected function extractId(string $pseudo_image_file): int
+    protected function extractIntId(string $pseudo_image_file): int
     {
         $matched = preg_match('~^(\d+)\.png$~', $pseudo_image_file, $matches);
         if (!$matched) {
             throw new Exception("Can not extract id from pseudo image file");
         }
         return (int)$matches[1];
+    }
+
+    /**
+     * @param string $pseudo_image_file
+     * @return string
+     */
+    protected function extractStringId(string $pseudo_image_file): string
+    {
+        $matched = preg_match('~^([^\.]+)\.png$~', $pseudo_image_file, $matches);
+        if (!$matched) {
+            throw new Exception("Can not extract id from pseudo image file");
+        }
+        return (string)$matches[1];
     }
 
     /**
@@ -92,6 +107,78 @@ trait ImageServiceMethods
             file_put_contents($image_path, $data);
         }
         return $image_path;
+    }
+
+    /**
+     * @param int $company_id
+     * @param string $file_path
+     * @return string
+     */
+    protected function getLocalCompanyFile(int $company_id, string $file_path): string
+    {
+        $image_dir = $this->getCompanyImageDir($company_id);
+        $image_path = $image_dir . $file_path;
+        if (!is_file($image_path)) {
+            if (!is_dir($image_dir)) {
+                mkdir($image_dir, 0755, true);
+            }
+
+            $tmdb_url = sprintf(
+                '%s://image.tmdb.org/t/p/%s%s',
+                $this->getRequest()->scheme(),
+                $this->image_config['max_width']['logos'],
+                $file_path
+            );
+
+            $data = file_get_contents($tmdb_url);
+            file_put_contents($image_path, $data);
+        }
+        return $image_path;
+    }
+
+    /**
+     * @param string $reviewer_id
+     * @param string $file_path
+     * @return string
+     */
+    protected function getLocalReviewerFile(string $reviewer_id, string $file_path): string
+    {
+        $image_dir = $this->getReviewerImageDir($reviewer_id);
+        $image_path = $image_dir . $file_path;
+        if (!is_file($image_path)) {
+            if (!is_dir($image_dir)) {
+                mkdir($image_dir, 0755, true);
+            }
+
+            $tmdb_url = sprintf(
+                '%s://image.tmdb.org/t/p/%s%s',
+                $this->getRequest()->scheme(),
+                $this->image_config['max_width']['stills'],
+                $file_path
+            );
+
+            $data = file_get_contents($tmdb_url);
+            file_put_contents($image_path, $data);
+        }
+        return $image_path;
+    }
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    protected function getCompanyImageDir(int $id): string
+    {
+        return MOVIE_IMAGES_DIR . 'Companies' . DS . $id;
+    }
+
+    /**
+     * @param string $id
+     * @return string
+     */
+    protected function getReviewerImageDir(string $id): string
+    {
+        return MOVIE_IMAGES_DIR . 'Reviewers' . DS . $id;
     }
 
     /**
@@ -163,6 +250,33 @@ trait ImageServiceMethods
         $cache_key = 'Person_' . $id;
         if (($entity = Cache::read($cache_key)) === false) {
             $entity = $this->People->get($id);
+            Cache::write($cache_key, $entity);
+        }
+        return $entity;
+    }
+
+    /**
+     * @param int $id
+     * @return Company
+     */
+    protected function getCompany(int $id): Company
+    {
+        $cache_key = 'Company_' . $id;
+        if (($entity = Cache::read($cache_key)) === false) {
+            $entity = $this->Companies->get($id);
+            Cache::write($cache_key, $entity);
+        }
+        return $entity;
+    }
+    /**
+     * @param string $id
+     * @return Reviewer
+     */
+    protected function getReviewer(string $id): Reviewer
+    {
+        $cache_key = 'Reviewer_' . $id;
+        if (($entity = Cache::read($cache_key)) === false) {
+            $entity = $this->Reviewers->get($id);
             Cache::write($cache_key, $entity);
         }
         return $entity;

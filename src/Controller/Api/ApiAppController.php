@@ -27,6 +27,7 @@ class ApiAppController extends \App\Controller\AppController
         parent::loadAuth();
         $this->Auth->setConfig([
             'authenticate' => [
+                'ApiKey',
                 'Jwt' => [
                     'fields' => [
                         'username' => 'id',

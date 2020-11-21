@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Test\TestCase\Controller;
+namespace App\Test\TestCase\Controller\Api;
 
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\KeywordsController Test Case
+ * App\Controller\Api\MoviesController Test Case
  *
- * @uses \App\Controller\KeywordsController
+ * @uses \App\Controller\Api\MoviesController
  */
-class KeywordsControllerTest extends TestCase
+class MoviesControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
@@ -20,9 +20,19 @@ class KeywordsControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Keywords',
         'app.Movies',
+        'app.Videos',
+        'app.Casts',
+        'app.Crews',
+        'app.Reviews',
+        'app.MoviePosters',
+        'app.MovieBackdrops',
+        'app.Genres',
+        'app.Keywords',
+        'app.ProductionCompanies',
+        'app.MoviesGenres',
         'app.MoviesKeywords',
+        'app.MoviesCompanies',
     ];
 
     /**

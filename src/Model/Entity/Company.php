@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 
 /**
  * Company Entity
@@ -19,6 +21,9 @@ use Cake\ORM\Entity;
  */
 class Company extends Entity
 {
+    protected $_virtual = ['logo_image_url'];
+    protected $_hidden = ['payload', 'logo_path'];
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -38,4 +43,18 @@ class Company extends Entity
         'modified' => true,
         'movies' => true,
     ];
+
+
+    protected function _getLogoImageUrl()
+    {
+        return $this->logo_path
+            ? Router::url([
+                'prefix' => false,
+                'plugin' => null,
+                'controller' => 'ImageService',
+                'action' => 'byCompanyId',
+                $this->id . '.png'
+            ], true)
+            : null;
+    }
 }

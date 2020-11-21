@@ -33,6 +33,7 @@ use Cake\Routing\Router;
 class Person extends Entity
 {
     protected $_virtual = ['image_url'];
+    protected $_hidden = ['payload', 'profile_path'];
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -68,11 +69,12 @@ class Person extends Entity
     {
         return $this->profile_path
             ? Router::url([
+                'prefix' => false,
                 'plugin' => null,
                 'controller' => 'ImageService',
                 'action' => 'byPersonId',
                 $this->id . '.png'
-            ])
+            ], true)
             : null;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
@@ -14,6 +15,13 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\GenresTable&\Cake\ORM\Association\BelongsToMany $Genres
  * @property \App\Model\Table\KeywordsTable&\Cake\ORM\Association\BelongsToMany $Keywords
+ * @property \App\Model\Table\VideosTable&\Cake\ORM\Association\HasMany $Videos
+ * @property \App\Model\Table\CastsTable&\Cake\ORM\Association\HasMany $Casts
+ * @property \App\Model\Table\CrewsTable&\Cake\ORM\Association\HasMany $Crews
+ * @property \App\Model\Table\ReviewsTable&\Cake\ORM\Association\HasMany $Reviews
+ * @property \App\Model\Table\MoviePostersTable&\Cake\ORM\Association\HasMany $MoviePosters
+ * @property \App\Model\Table\MovieBackdropsTable&\Cake\ORM\Association\HasMany $MovieBackdrops
+ * @property \App\Model\Table\CompaniesTable&\Cake\ORM\Association\BelongsToMany $ProductionCompanies
  *
  * @method \App\Model\Entity\Movie get($primaryKey, $options = [])
  * @method \App\Model\Entity\Movie newEntity($data = null, array $options = [])

@@ -101,6 +101,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/images/biid/*', ['controller' => 'ImageService', 'action' => 'byImageId']);
     $routes->connect('/images/bmid/*', ['controller' => 'ImageService', 'action' => 'byMovieId']);
     $routes->connect('/images/bpid/*', ['controller' => 'ImageService', 'action' => 'byPersonId']);
+    $routes->connect('/images/bcid/*', ['controller' => 'ImageService', 'action' => 'byCompanyId']);
 });
 
 /*

@@ -20,8 +20,11 @@ class MoviesController extends AppController
     public function index()
     {
         $movies = $this->paginate($this->Movies);
+        $keywords = $this->Movies->Keywords->find('list', ['limit' => 200, 'order' => 'name']);
+        $genres = $this->Movies->Genres->find('list', ['limit' => 200, 'order' => 'name']);
+        $companies = $this->Movies->ProductionCompanies->find('list', ['limit' => 200, 'order' => 'name']);
 
-        $this->set(compact('movies'));
+        $this->set(compact('movies', 'keywords', 'genres', 'companies'));
     }
 
     /**

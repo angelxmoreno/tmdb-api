@@ -14,6 +14,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\GenresTable&\Cake\ORM\Association\BelongsToMany $Genres
  * @property \App\Model\Table\KeywordsTable&\Cake\ORM\Association\BelongsToMany $Keywords
+ * @property \App\Model\Table\CompaniesTable&\Cake\ORM\Association\BelongsToMany $ProductionCompanies
  *
  * @method \App\Model\Entity\Movie get($primaryKey, $options = [])
  * @method \App\Model\Entity\Movie newEntity($data = null, array $options = [])

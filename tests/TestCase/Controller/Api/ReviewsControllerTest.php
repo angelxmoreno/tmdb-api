@@ -6,11 +6,11 @@ use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\Api\CompaniesController Test Case
+ * App\Controller\Api\ReviewsController Test Case
  *
- * @uses \App\Controller\Api\CompaniesController
+ * @uses \App\Controller\Api\ReviewsController
  */
-class CompaniesControllerTest extends TestCase
+class ReviewsControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
@@ -20,9 +20,9 @@ class CompaniesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Companies',
+        'app.Reviews',
         'app.Movies',
-        'app.MoviesCompanies',
+        'app.Reviewers',
     ];
 
     /**

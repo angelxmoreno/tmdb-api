@@ -3,6 +3,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 
 /**
  * Reviewer Entity
@@ -20,6 +21,7 @@ use Cake\ORM\Entity;
 class Reviewer extends Entity
 {
     protected $_virtual = ['image_url'];
+    protected $_hidden = ['avatar_path', 'url'];
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -43,14 +45,14 @@ class Reviewer extends Entity
 
     protected function _getImageUrl()
     {
-        if ($this->avatar_path === null) {
-            return null;
-        }
-
-        if (substr($this->avatar_path, 0, 5) === '/http') {
-            return substr($this->avatar_path, 1);
-        }
-
-        return 'https://image.tmdb.org/t/p/w300' . $this->avatar_path;
+        return $this->avatar_path
+            ? Router::url([
+                'prefix' => false,
+                'plugin' => null,
+                'controller' => 'ImageService',
+                'action' => 'byReviewerId',
+                $this->id . '.png'
+            ], true)
+            : null;
     }
 }

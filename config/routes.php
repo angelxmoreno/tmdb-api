@@ -48,7 +48,7 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
     Router::prefix('api', function (RouteBuilder $routes) {
-        $apiControllers = ['Movies', 'Genres', 'Keywords', 'Companies', 'People'];
+        $apiControllers = ['Movies', 'Genres', 'Keywords', 'Companies', 'People', 'Reviews'];
         foreach ($apiControllers as $apiController) {
             $routes->resources($apiController);
         }
@@ -102,6 +102,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/images/bmid/*', ['controller' => 'ImageService', 'action' => 'byMovieId']);
     $routes->connect('/images/bpid/*', ['controller' => 'ImageService', 'action' => 'byPersonId']);
     $routes->connect('/images/bcid/*', ['controller' => 'ImageService', 'action' => 'byCompanyId']);
+    $routes->connect('/images/brid/*', ['controller' => 'ImageService', 'action' => 'byReviewerId']);
 });
 
 /*

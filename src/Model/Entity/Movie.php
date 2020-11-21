@@ -52,6 +52,7 @@ use Cake\Routing\Router;
 class Movie extends Entity
 {
     protected $_virtual = ['backdrop_image_url', 'poster_image_url'];
+    protected $_hidden = ['payload', 'backdrop_path', 'poster_path'];
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -104,24 +105,29 @@ class Movie extends Entity
 
     protected function _getBackdropImageUrl()
     {
-        return Router::url([
-            'plugin' => null,
-            'controller' => 'ImageService',
-            'action' => 'byMovieId',
-            'backdrops',
-            $this->id . '.png'
-        ]);
+        return $this->backdrop_path
+            ? Router::url([
+                'prefix' => false,
+                'plugin' => null,
+                'controller' => 'ImageService',
+                'action' => 'byMovieId',
+                'backdrops',
+                $this->id . '.png'
+            ], true)
+            : null;
     }
-
 
     protected function _getPosterImageUrl()
     {
-        return Router::url([
-            'plugin' => null,
-            'controller' => 'ImageService',
-            'action' => 'byMovieId',
-            'posters',
-            $this->id . '.png'
-        ]);
+        return $this->poster_path
+            ? Router::url([
+                'prefix' => false,
+                'plugin' => null,
+                'controller' => 'ImageService',
+                'action' => 'byMovieId',
+                'posters',
+                $this->id . '.png'
+            ], true)
+            : null;
     }
 }

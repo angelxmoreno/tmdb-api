@@ -1,7 +1,7 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
+namespace App\Controller;
 
 /**
  * Movies Controller
@@ -15,7 +15,7 @@ class MoviesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null
+     * @return void
      */
     public function index()
     {
@@ -28,85 +28,14 @@ class MoviesController extends AppController
      * View method
      *
      * @param string|null $id Movie id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return void
      */
     public function view($id = null)
     {
         $movie = $this->Movies->get($id, [
-            'contain' => ['Genres', 'Keywords', 'ProductionCompanies', 'Videos', 'Casts', 'Crews', 'Reviews', 'MoviePosters', 'MovieBackdrops'],
+            'contain' => ['Genres', 'Keywords', 'ProductionCompanies', 'Videos', 'Casts' => ['People'], 'Crews' => ['People'], 'Reviews' => ['Reviewers'], 'MoviePosters', 'MovieBackdrops'],
         ]);
 
         $this->set('movie', $movie);
-    }
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $movie = $this->Movies->newEntity();
-        if ($this->request->is('post')) {
-            $movie = $this->Movies->patchEntity($movie, $this->request->getData());
-            if ($this->Movies->save($movie)) {
-                $this->Flash->success(__('The movie has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The movie could not be saved. Please, try again.'));
-        }
-        $genres = $this->Movies->Genres->find('list', ['limit' => 200]);
-        $keywords = $this->Movies->Keywords->find('list', ['limit' => 200]);
-        $productionCompanies = $this->Movies->ProductionCompanies->find('list', ['limit' => 200]);
-        $this->set(compact('movie', 'genres', 'keywords', 'productionCompanies'));
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Movie id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $movie = $this->Movies->get($id, [
-            'contain' => ['Genres', 'Keywords', 'ProductionCompanies'],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $movie = $this->Movies->patchEntity($movie, $this->request->getData());
-            if ($this->Movies->save($movie)) {
-                $this->Flash->success(__('The movie has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The movie could not be saved. Please, try again.'));
-        }
-        $genres = $this->Movies->Genres->find('list', ['limit' => 200]);
-        $keywords = $this->Movies->Keywords->find('list', ['limit' => 200]);
-        $productionCompanies = $this->Movies->ProductionCompanies->find('list', ['limit' => 200]);
-        $this->set(compact('movie', 'genres', 'keywords', 'productionCompanies'));
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Movie id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $movie = $this->Movies->get($id);
-        if ($this->Movies->delete($movie)) {
-            $this->Flash->success(__('The movie has been deleted.'));
-        } else {
-            $this->Flash->error(__('The movie could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
     }
 }

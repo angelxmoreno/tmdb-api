@@ -92,6 +92,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
     $routes->connect('/images/biid/*', ['controller' => 'ImageService', 'action' => 'byImageId']);
     $routes->connect('/images/bmid/*', ['controller' => 'ImageService', 'action' => 'byMovieId']);
+    $routes->connect('/images/bpid/*', ['controller' => 'ImageService', 'action' => 'byPersonId']);
 });
 
 /*

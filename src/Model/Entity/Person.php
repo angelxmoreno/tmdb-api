@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 
 /**
  * Person Entity
@@ -18,6 +20,7 @@ use Cake\ORM\Entity;
  * @property string|null $place_of_birth
  * @property float|null $popularity
  * @property string|null $profile_path
+ * @property string|null $image_url
  * @property string $payload
  * @property \Cake\I18n\FrozenDate|null $birthday
  * @property \Cake\I18n\FrozenDate|null $deathday
@@ -29,6 +32,8 @@ use Cake\ORM\Entity;
  */
 class Person extends Entity
 {
+    protected $_virtual = ['image_url'];
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -58,4 +63,16 @@ class Person extends Entity
         'casts' => true,
         'crews' => true,
     ];
+
+    protected function _getImageUrl()
+    {
+        return $this->profile_path
+            ? Router::url([
+                'plugin' => null,
+                'controller' => 'ImageService',
+                'action' => 'byPersonId',
+                $this->id . '.png'
+            ])
+            : null;
+    }
 }

@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace App\View;
 
+use App\View\Helper\VideoWidgetHelper;
 use Cake\View\View;
 
 /**
@@ -23,6 +24,8 @@ use Cake\View\View;
  * Your application's default view class
  *
  * @link https://book.cakephp.org/3/en/views.html#the-app-view
+ *
+ * @property VideoWidgetHelper $VideoWidget
  */
 class AppView extends View
 {
@@ -38,6 +41,7 @@ class AppView extends View
     public function initialize()
     {
         $helpers = [
+            'VideoWidget',
             'Html' => ['className' => 'BootstrapUI.Html'],
             'Form' => ['className' => 'BootstrapUI.Form'],
             'Flash' => ['className' => 'BootstrapUI.Flash'],
@@ -46,6 +50,5 @@ class AppView extends View
         ];
 
         $this->helpers = array_merge($helpers, $this->helpers);
-
     }
 }

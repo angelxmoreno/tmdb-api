@@ -57,7 +57,7 @@
     </tr>
     </thead>
     <tbody>
-        <?php foreach ($movies as $movie): ?>
+    <?php foreach ($movies as $movie): ?>
         <tr>
             <td><?= $this->Number->format($movie->id) ?></td>
             <td><?= h($movie->title) ?></td>
@@ -92,7 +92,7 @@
                 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $movie->id], ['confirm' => __('Are you sure you want to delete # {0}?', $movie->id), 'title' => __('Delete'), 'class' => 'btn btn-danger']) ?>
             </td>
         </tr>
-        <?php endforeach; ?>
+    <?php endforeach; ?>
     </tbody>
 </table>
 <div class="paginator">

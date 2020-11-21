@@ -12,7 +12,7 @@
                 ['action' => 'delete', $genre->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $genre->id)]
             )
-        ?></li>
+            ?></li>
         <li><?= $this->Html->link(__('List Genres'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Movies'), ['controller' => 'Movies', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Movie'), ['controller' => 'Movies', 'action' => 'add']) ?></li>
@@ -23,8 +23,8 @@
     <fieldset>
         <legend><?= __('Edit Genre') ?></legend>
         <?php
-            echo $this->Form->control('name');
-            echo $this->Form->control('movies._ids', ['options' => $movies]);
+        echo $this->Form->control('name');
+        echo $this->Form->control('movies._ids', ['options' => $movies]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

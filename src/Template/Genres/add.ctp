@@ -17,8 +17,8 @@
     <fieldset>
         <legend><?= __('Add Genre') ?></legend>
         <?php
-            echo $this->Form->control('name');
-            echo $this->Form->control('movies._ids', ['options' => $movies]);
+        echo $this->Form->control('name');
+        echo $this->Form->control('movies._ids', ['options' => $movies]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
